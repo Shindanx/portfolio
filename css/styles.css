@@ -92,7 +92,7 @@ body {
   transform: translate(-50%, -50%);
   border: 1px solid #ffffff;
   mix-blend-mode: difference;
-  transition: 
+  transition:
     width 0.25s cubic-bezier(0.16, 1, 0.3, 1),
     height 0.25s cubic-bezier(0.16, 1, 0.3, 1),
     border-radius 0.3s ease;
@@ -217,10 +217,12 @@ nav {
   position: absolute;
   left: 2.5px;
   top: 3px;
-  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  /* CRITICAL FIX: Ensure transform is transitioned smoothly */
+  transition:
+    transform 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+    background-color 0.3s;
 }
-
-[data-theme=\"light\"] .toggle-slider {
+[data-theme="light"] .toggle-slider {
   transform: translateY(16px);
 }
 
@@ -494,6 +496,12 @@ section {
   position: relative;
   overflow: hidden;
   cursor: none;
+  /* RESET BUTTON DEFAULTS */
+  border: none;
+  padding: 0;
+  width: 100%;
+  text-align: left;
+  display: block;
 }
 
 .video-thumb {
@@ -569,14 +577,12 @@ section {
   text-transform: uppercase;
   color: var(--mid);
   text-decoration: none;
-  border: 1px dashed var(--border);
+  border: 1px dashed var(--border) !important;
   cursor: none;
-  aspect-ratio: unset;
+  aspect-ratio: 16/9; /* Keeps grid matching nicely */
   background: transparent;
   padding: 24px;
-  transition:
-    color 0.15s,
-    border-color 0.15s;
+  transition: color 0.15s, border-color 0.15s;
 }
 .video-more:hover {
   color: var(--ink);
@@ -666,7 +672,7 @@ footer span {
   #cursor-frame {
     display: none !important;
   }
-  
+
   .section-row {
     display: block;
     min-height: auto;
@@ -737,4 +743,203 @@ footer span {
   .theme-toggle {
     cursor: auto;
   }
+}
+
+.project-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: var(--paper);
+  z-index: 20000; /* Sits above everything, including the sidebar */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.project-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.overlay-bar {
+  width: 100%;
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  background: var(--paper);
+}
+
+.overlay-title {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.close-project-btn {
+  background: transparent;
+  border: 1px solid var(--ink);
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 8px 16px;
+  color: var(--ink);
+  cursor: none;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+.close-project-btn:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.project-frame {
+  width: 100%;
+  flex-grow: 1;
+  border: none;
+  background: #ffffff;
+}
+/* ADD TO THE BOTTOM OF YOUR STYLES.CSS */
+.project-case-study {
+  width: 100%;
+  flex-grow: 1;
+  overflow-y: auto;
+  background: var(--paper);
+  padding: 60px 4%;
+}
+
+.case-study-content {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.case-label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 12px;
+}
+
+.case-hero {
+  margin-bottom: 60px;
+}
+
+.logo-display-main {
+  width: max-content;
+  max-width: 100%;
+  background: var(--subtle);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px; /* Reduced padding so container hugs tightly */
+  margin: 0 auto; /* Keeps it beautifully centered in the grid block */
+}
+
+.logo-display-main img {
+  width: 100%;
+  max-width: 520px; /* Generous scale limit for high visibility */
+  height: auto;
+  object-fit: contain;
+}
+
+.case-variants-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.logo-display-sub {
+  width: max-content;
+  max-width: 100%;
+  background: var(--subtle);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px; /* Reduced to hug the asset silhouette cleanly */
+  margin: 0 auto 16px auto;
+}
+
+.logo-display-sub img {
+  width: 100%;
+  max-width: 240px; /* Enhanced variant scale factor */
+  height: auto;
+  object-fit: contain;
+}
+
+/* Forces a clean fallback wrapper background for inverse assets if needed */
+.logo-display-sub.inverted-bg {
+  background: #141412;
+}
+
+.variant-desc {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--body-muted);
+  font-weight: 300;
+}
+
+@media (max-width: 768px) {
+  .case-variants-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+.variant-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+/* Elevate the cursor structure over the project overlay modal */
+#cursor-pointer {
+  z-index: 21000 !important;
+}
+
+#cursor-frame {
+  z-index: 20999 !important;
+}
+
+/* Ensure the outer frame morphs elegantly when hovering over the close button */
+body:has(.close-project-btn:hover) #cursor-frame {
+  width: 44px;
+  height: 44px;
+  border-radius: 4px;
+  border-color: #ffffff;
+}
+.video-more.bypass-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.video-more.bypass-overlay:hover {
+  background: var(--subtle);
+  border-color: var(--mid);
+  color: var(--ink);
+}
+.video-item:hover .video-thumb {
+  opacity: 0.85;
+  transform: scale(1.03); /* Smooth upscale on hover */
+}
+
+.video-item:hover .video-play {
+  transform: translate(-50%, -50%) scale(1.1);
+  background: rgba(0, 0, 0, 0.85);
 }
