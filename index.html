@@ -1,175 +1,240 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>João — UI/UX Portfolio</title>
-    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/styles.css" />
     <script src="./js/scripts.js" defer></script>
-</head>
-<body>
-    <div id="cursor"></div>
-<div id="cursor-ring"></div>
- 
-<div class="layout">
- 
-  <nav>
-    <div>
-      <div class="nav-name">João<br>Ferreira</div>
-      <div class="nav-title">UI/UX Dev</div>
-    </div>
-    <ul class="nav-links">
-      <li><a href="#home" class="active"><span></span>Home</a></li>
-      <li><a href="#about"><span></span>About</a></li>
-      <li><a href="#work"><span></span>Work</a></li>
-      <li><a href="#video"><span></span>Video</a></li>
-      <li><a href="#contact"><span></span>Contact</a></li>
-    </ul>
-    <div class="nav-contact">
-      <a href="mailto:hello@yourname.pt">hello@yourname.pt</a>
-      <a href="https://linkedin.com/in/yourhandle" target="_blank">LinkedIn ↗</a>
-      <a href="https://github.com/yourhandle" target="_blank">GitHub ↗</a>
-    </div>
-  </nav>
- 
-  <main>
- 
-    <section id="home">
-      <p class="hero-eyebrow">Available for internship — Portugal</p>
-      <h1 class="hero-headline">
-        Designing things<br>that <em>feel right</em><br>to use.
-      </h1>
-      <p class="hero-body">
-        UI/UX development student based in Portugal. I care about the space between a design that looks good and one that actually works — clean code, considered interfaces, real attention to detail.
-      </p>
-      <a href="#work" class="hero-cta">
-        View my work
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
-    </section>
- 
-    <section id="about" class="fade-in">
-      <p class="section-label">About</p>
-      <div class="about-grid">
-        <div class="about-text">
-          <p>
-            I'm currently enrolled in a web development program with a focus on UI/UX — learning the full stack from wireframe to shipped code. I gravitate toward projects where visual clarity and usability have to work together.
-          </p>
-          <p>
-            Outside of coursework I've worked on branding and motion projects — designing a logo and producing promotional and event videos. I like work that has a purpose beyond looking polished.
-          </p>
-          <p>
-            Looking for an internship where I can contribute from day one and keep growing fast.
-          </p>
-        </div>
+  </head>
+  <body>
+    <div id="cursor-pointer"></div>
+    <div id="cursor-frame"></div>
+
+    <div class="layout">
+      <nav>
         <div>
-          <ul class="skills-list">
-            <li>HTML & CSS</li>
-            <li>JavaScript</li>
-            <li>UI/UX Design</li>
-            <li>Figma</li>
-            <li>Responsive Layouts</li>
-            <li>Brand Identity</li>
-            <li>Video Production</li>
-          </ul>
+          <div class="nav-name">
+            <span>João<br />Silva</span>
+            <button
+              class="theme-toggle"
+              id="themeToggle"
+              aria-label="Toggle theme"
+            >
+              <span class="toggle-slider"></span>
+            </button>
+          </div>
+          <div class="nav-title">UI/UX Dev</div>
         </div>
-      </div>
-    </section>
- 
-    <section id="work" class="fade-in">
-      <p class="section-label">Selected work</p>
-      <div class="work-list">
- 
-        <a href="#" class="work-item">
-          <div>
-            <p class="work-meta">Website — HTML / CSS</p>
-            <h2 class="work-title">SakeCat Restaurant</h2>
-            <p class="work-desc">A four-page concept restaurant site for a cat-chef brand. Full design system with brand variables, responsive layouts, CSS-only modal, and a hand-built design identity.</p>
-            <span class="work-tag">Live project</span>
-          </div>
-          <span class="work-arrow">→</span>
-        </a>
- 
-        <a href="#" class="work-item">
-          <div>
-            <p class="work-meta">Branding — Identity Design</p>
-            <h2 class="work-title">SakeCat Logo</h2>
-            <p class="work-desc">Full brand mark for the SakeCat concept — a cat-chef composition featuring a koi fish on a plate with ripple effects. Developed outside of coursework.</p>
-            <span class="work-tag">Logo / Identity</span>
-          </div>
-          <span class="work-arrow">→</span>
-        </a>
- 
-        <a href="#" class="work-item">
-          <div>
-            <p class="work-meta">Prototype — Figma</p>
-            <h2 class="work-title">Medieval Fairs Map of Portugal</h2>
-            <p class="work-desc">Interactive Figma prototype mapping medieval fair events by district. Hover effects, district highlighting, and click-to-focus interactions using Smart Animate.</p>
-            <span class="work-tag">UX Prototype</span>
-          </div>
-          <span class="work-arrow">→</span>
-        </a>
- 
-      </div>
-    </section>
- 
-    <section id="video" class="fade-in">
-      <p class="section-label">Video work</p>
-      <div class="video-grid">
- 
-        <div class="video-item">
-          <img class="video-thumb" src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=600&q=60" alt="Promotional video thumbnail">
-          <div class="video-info">
-            <p class="video-type">Promotional</p>
-            <p class="video-name">Project title here</p>
-          </div>
-          <div class="video-play">▶</div>
+        <ul class="nav-links">
+          <li>
+            <a href="#home" class="active"><span></span>Home</a>
+          </li>
+          <li>
+            <a href="#about"><span></span>About</a>
+          </li>
+          <li>
+            <a href="#work"><span></span>Work</a>
+          </li>
+          <li>
+            <a href="#video"><span></span>Video</a>
+          </li>
+          <li>
+            <a href="#contact"><span></span>Contact</a>
+          </li>
+        </ul>
+        <div class="nav-contact">
+          <a href="mailto:joao.carneirosilva98@gmail.com"
+            >joao.carneirosilva98@gmail.com</a
+          >
+          <a href="https://linkedin.com/in/joao-silva98" target="_blank"
+            >LinkedIn ↗</a
+          >
+          <a href="https://github.com/Shindanx" target="_blank">GitHub ↗</a>
         </div>
- 
-        <div class="video-item">
-          <img class="video-thumb" src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=600&q=60" alt="Event video thumbnail">
-          <div class="video-info">
-            <p class="video-type">Event</p>
-            <p class="video-name">Project title here</p>
-          </div>
-          <div class="video-play">▶</div>
+      </nav>
+
+      <main>
+        <div class="section-row">
+          <section id="home">
+            <p class="hero-eyebrow">Available for internship — Portugal</p>
+            <h1 class="hero-headline">
+              Designing things<br />that <em>feel right</em><br />to use.
+            </h1>
+            <p class="hero-body">
+              UI/UX development student based in Portugal. I care about the space
+              between a design that looks good and one that actually works — clean
+              code, considered interfaces, real attention to detail.
+            </p>
+            <a href="#work" class="hero-cta">
+              View my work
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path
+                  d="M3 8h10M9 4l4 4-4 4"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+          </section>
         </div>
- 
-        <div class="video-item">
-          <img class="video-thumb" src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=60" alt="Video thumbnail">
-          <div class="video-info">
-            <p class="video-type">Promotional</p>
-            <p class="video-name">Project title here</p>
-          </div>
-          <div class="video-play">▶</div>
+
+        <div class="section-row fade-in">
+          <section id="about">
+            <p class="section-label">About</p>
+            <div class="about-grid">
+              <div class="about-text">
+                <p>
+                  I'm currently enrolled in a web development program with a focus
+                  on UI/UX — learning the full stack from wireframe to shipped
+                  code. I gravitate toward projects where visual clarity and
+                  usability have to work together.
+                </p>
+                <p>
+                  Outside of coursework I've worked on branding and motion
+                  projects — designing a logo and producing promotional and event
+                  videos. I like work that has a purpose beyond looking polished.
+                </p>
+                <p>
+                  Looking for an internship where I can contribute from day one
+                  and keep growing fast.
+                </p>
+              </div>
+              <div>
+                <ul class="skills-list">
+                  <li>HTML & CSS</li>
+                  <li>JavaScript</li>
+                  <li>UI/UX Design</li>
+                  <li>Figma</li>
+                  <li>Responsive Layouts</li>
+                  <li>Brand Identity</li>
+                  <li>Video Production</li>
+                </ul>
+              </div>
+            </div>
+          </section>
         </div>
- 
-        <a href="#" class="video-more video-item">
-          + 7 more videos
-        </a>
- 
-      </div>
-    </section>
- 
-    <section id="contact" class="fade-in">
-      <p class="section-label">Contact</p>
-      <p class="contact-line">
-        Let's talk —<br>
-        <a href="mailto:hello@yourname.pt">hello@yourname.pt</a>
-      </p>
-      <p class="contact-note">
-        Open to internship opportunities in Portugal or remote. Happy to share more work, hop on a call, or answer any questions.
-      </p>
-    </section>
- 
-  </main>
-</div>
- 
-<footer>
-  <span>João Ferreira — UI/UX Developer</span>
-  <span>Portugal, 2025</span>
-</footer>
-</body>
+
+        <div class="section-row fade-in">
+          <section id="work">
+            <p class="section-label">Selected work</p>
+            <div class="work-list">
+              <a href="#" class="work-item">
+                <div>
+                  <p class="work-meta">Website — HTML / CSS</p>
+                  <h2 class="work-title">SakeCat Restaurant</h2>
+                  <p class="work-desc">
+                    A four-page concept restaurant site for a cat-chef brand. Full
+                    design system with brand variables, responsive layouts,
+                    CSS-only modal, and a hand-built design identity.
+                  </p>
+                  <span class="work-tag">Live project</span>
+                </div>
+                <span class="work-arrow">→</span>
+              </a>
+
+              <a href="#" class="work-item">
+                <div>
+                  <p class="work-meta">Branding — Identity Design</p>
+                  <h2 class="work-title">KoiKuro Logo</h2>
+                  <p class="work-desc">
+                    Brand mark born from the SakeCat concept — a cat-chef
+                    composition featuring a koi fish on a plate with ripple
+                    effects. Developed outside of coursework.
+                  </p>
+                  <span class="work-tag">Logo / Identity</span>
+                </div>
+                <span class="work-arrow">→</span>
+              </a>
+
+              <a href="#" class="work-item">
+                <div>
+                  <p class="work-meta">Prototype — Figma</p>
+                  <h2 class="work-title">Medieval Fairs Map of Portugal</h2>
+                  <p class="work-desc">
+                    Interactive Figma prototype mapping medieval fair events by
+                    district. Hover effects, district highlighting, and
+                    click-to-focus interactions using Smart Animate.
+                  </p>
+                  <span class="work-tag">UX Prototype</span>
+                </div>
+                <span class="work-arrow">→</span>
+              </a>
+            </div>
+          </section>
+        </div>
+
+        <div class="section-row fade-in">
+          <section id="video">
+            <p class="section-label">Video work</p>
+            <div class="video-grid">
+              <div class="video-item">
+                <img
+                  class="video-thumb"
+                  src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=600&q=60"
+                  alt="Promotional video thumbnail"
+                />
+                <div class="video-info">
+                  <p class="video-type">Promotional</p>
+                  <p class="video-name">Project title here</p>
+                </div>
+                <div class="video-play">▶</div>
+              </div>
+
+              <div class="video-item">
+                <img
+                  class="video-thumb"
+                  src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=600&q=60"
+                  alt="Event video thumbnail"
+                />
+                <div class="video-info">
+                  <p class="video-type">Event</p>
+                  <p class="video-name">Project title here</p>
+                </div>
+                <div class="video-play">▶</div>
+              </div>
+
+              <div class="video-item">
+                <img
+                  class="video-thumb"
+                  src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=60"
+                  alt="Video thumbnail"
+                />
+                <div class="video-info">
+                  <p class="video-type">Promotional</p>
+                  <p class="video-name">Project title here</p>
+                </div>
+                <div class="video-play">▶</div>
+              </div>
+
+              <a href="#" class="video-more video-item"> + 7 more videos </a>
+            </div>
+          </section>
+        </div>
+
+        <div class="section-row fade-in">
+          <section id="contact">
+            <p class="section-label">Contact</p>
+            <p class="contact-line">
+              Let's talk —<br />
+              <a href="mailto:joao.carneirosilva98@gmail.com"
+                >joao.carneirosilva98@gmail.com</a
+              >
+            </p>
+            <p class="contact-note">
+              Open to internship opportunities in Portugal or remote. Happy to
+              share more work, hop on a call, or answer any questions.
+            </p>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <footer>
+      <span>João Silva — UI/UX Developer</span>
+      <span>Portugal, 2026</span>
+    </footer>
+  </body>
 </html>
