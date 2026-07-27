@@ -57,6 +57,7 @@ img {
   position: relative;
   width: 100vw;
   height: 100svh;
+  height: 100dvh;
   overflow: hidden;
   overscroll-behavior: none;
   background: linear-gradient(
@@ -798,6 +799,7 @@ img {
   inset: 0;
   width: 100vw;
   height: 100svh;
+  height: 100dvh;
   max-width: none;
   max-height: none;
   margin: auto;
@@ -832,6 +834,7 @@ img {
   --overlay-scale-x: 1;
   --overlay-scale-y: 1;
   --overlay-rotation: 0deg;
+  --overlay-lift: 0px;
 
   top: 50%;
   bottom: auto;
@@ -841,7 +844,8 @@ img {
   overflow: hidden;
   left: 50vw;
   right: auto;
-  transform: translate(var(--overlay-x), var(--overlay-y))
+  transform: translateY(calc(-1 * var(--overlay-lift)))
+    translate(var(--overlay-x), var(--overlay-y))
     scale(var(--overlay-scale-x), var(--overlay-scale-y))
     rotate(var(--overlay-rotation));
 }
@@ -859,7 +863,7 @@ img {
 }
 
 .notebook-overlay {
-  --overlay-x: -50%;
+  --overlay-x: -55%;
   --overlay-y: -50%;
   --overlay-scale-x: 1;
   --overlay-scale-y: 1;
@@ -1562,6 +1566,12 @@ img {
 ------------------------------ */
 
 @media (max-width: 700px) {
+  .device-overlay {
+    /* Keep controls clear of mobile browser chrome without retuning each
+       device's artwork coordinates. */
+    --overlay-lift: clamp(12px, 3dvh, 24px);
+  }
+
   .desk-canvas {
     width: 280svh;
     height: 94.5svh;
