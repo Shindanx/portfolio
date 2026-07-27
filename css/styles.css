@@ -1655,6 +1655,11 @@ img {
     left: 28%;
   }
 
+  .notebook-overlay[data-notebook-page="skills"] .notebook-items {
+    left: 30.479%;
+    width: 46.5%;
+  }
+
   .notebook-tabs {
     z-index: 5;
   }
