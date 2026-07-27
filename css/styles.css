@@ -871,8 +871,9 @@ img {
   top: 50%;
   bottom: auto;
   width: auto;
-  height: 120svh;
-  aspect-ratio: 635 / 360;
+  height: 125svh;
+  height: 125dvh;
+  aspect-ratio: 2 / 1;
 }
 
 .phone-overlay {
@@ -912,11 +913,11 @@ img {
    - Adjust each tab's left/top values to move it.
    - Adjust --notebook-tab-width to resize all three tabs together.
    - Adjust --tab-hover-shift and --tab-active-shift to change how far tabs move.
-   - Coordinates follow the selection-sized 635 x 360 notebook artwork.
+   - Coordinates follow the shared 960 x 480 notebook canvas.
 ------------------------------ */
 
 .notebook-tabs {
-  --notebook-tab-width: 7.56%;
+  --notebook-tab-width: 6%;
   --tab-rest-shift: -0.1%;
   --tab-hover-shift: 0%;
   --tab-active-shift: -0.1%;
@@ -925,7 +926,7 @@ img {
 
   position: absolute;
   inset: 0;
-  z-index: 3;
+  z-index: 4;
   pointer-events: none;
 }
 
@@ -958,18 +959,18 @@ img {
 }
 
 .notebook-tab-about {
-  left: 93.386%;
-  top: 23.06%;
+  left: 78%;
+  top: 25.33%;
 }
 
 .notebook-tab-journey {
-  left: 93.228%;
-  top: 31.94%;
+  left: 77.9%;
+  top: 31.33%;
 }
 
 .notebook-tab-skills {
-  left: 92.13%;
-  top: 40.28%;
+  left: 77.3%;
+  top: 36.83%;
 }
 
 .notebook-tab:hover:not([aria-disabled="true"]),
@@ -1010,8 +1011,15 @@ img {
   filter: saturate(0.7);
 }
 
-.notebook-mobile-content {
-  display: none;
+.notebook-items {
+  position: absolute;
+  z-index: 3;
+  left: 25%;
+  top: 12%;
+  width: 51.458%;
+  height: auto;
+  max-width: none;
+  pointer-events: none;
 }
 
 .device-frame {
@@ -1637,68 +1645,38 @@ img {
   .notebook-overlay {
     top: auto;
     bottom: 0;
-    width: 290vw;
+    width: 470vw;
     height: auto;
-    --overlay-x: -75%;
+    --overlay-x: -67%;
     --overlay-y: 0%;
   }
 
-  .notebook-page-image.is-blank-mobile-page {
-    left: -23.78%;
-    right: auto;
-    width: 151.181%;
+  .notebook-items {
+    left: 28%;
   }
 
-  .notebook-mobile-content[hidden] {
-    display: none;
+  .notebook-overlay[data-notebook-page="skills"] .notebook-items {
+    left: 30.479%;
+    width: 46.5%;
   }
-
-  .notebook-mobile-content {
-    position: absolute;
-    z-index: 4;
-    left: 58%;
-    top: 7%;
-    display: block;
-    width: 34%;
-    height: auto;
-    max-width: none;
-    object-fit: contain;
-    pointer-events: none;
-  }
-
-  .notebook-overlay[data-notebook-page="skills"] .notebook-mobile-content {
-  left: 57.4%;
-  top: 16%;
-  width: 30%;
-}
-
-.notebook-overlay[data-notebook-page="journey"] .notebook-mobile-content {
-  left: 57%;
-  top: 14%;
-  width: 36%;
-}
 
   .notebook-tabs {
     z-index: 5;
   }
 
-  .notebook-tab {
-    top: 80%;
-  }
-
   .notebook-tab-about {
-    left: 85.2%;
-    top: 70%;
+    left: 72.5%;
+    top: 64%;
   }
 
   .notebook-tab-journey {
-    left: 85%;
-    top: 78%;
+    left: 72.4%;
+    top: 72%;
   }
 
   .notebook-tab-skills {
-    left: 84%;
-    top: 86%;
+    left: 71.8%;
+    top: 80%;
   }
 
   .phone-overlay {

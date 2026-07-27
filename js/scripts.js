@@ -657,18 +657,17 @@ const portfolioSections = {
   about: `
     <div class="device-overlay notebook-overlay" data-notebook-page="about">
       <img
-        class="device-frame notebook-page-image"
-        src="images/NoteBookOverlay.png"
+        class="device-frame notebook-base"
+        src="images/NoteBookOverlayBase.png"
         alt="Open notebook"
         draggable="false"
       />
 
       <img
-        class="notebook-mobile-content"
-        src=""
-        alt=""
+        class="notebook-items"
+        src="images/AboutItems.png"
+        alt="About notebook items"
         draggable="false"
-        hidden
       />
 
       <nav class="notebook-tabs" aria-label="About notebook pages">
@@ -887,28 +886,25 @@ function openSection(sectionName) {
 
 function setupNotebookTabs() {
   const notebook = overlayContent.querySelector(".notebook-overlay");
-  const pageImage = notebook?.querySelector(".notebook-page-image");
-  const mobileContent = notebook?.querySelector(".notebook-mobile-content");
+  const itemsImage = notebook?.querySelector(".notebook-items");
   const tabs = notebook?.querySelectorAll(".notebook-tab");
 
-  if (!notebook || !pageImage || !mobileContent || !tabs?.length) {
+  if (!notebook || !itemsImage || !tabs?.length) {
     return;
   }
 
   const notebookPages = {
     about: {
-      src: "images/NoteBookOverlay.png",
-      alt: "Open notebook - About page",
+      src: "images/AboutItems.png",
+      alt: "About notebook items",
     },
     journey: {
-      src: "images/NoteBookOverlayJourney.png",
-      mobileSrc: "images/NoteBookOverlayJourneyNotes.png",
-      alt: "Open notebook - Journey page",
+      src: "images/JourneyItems.png",
+      alt: "Journey notebook items",
     },
     skills: {
-      src: "images/NoteBookOverlaySkills.png",
-      mobileSrc: "images/NoteBookOverlaySkillsWriting.png",
-      alt: "Open notebook - Skills page",
+      src: "images/SkillsItems.png",
+      alt: "Skills notebook items",
     },
   };
 
@@ -919,23 +915,9 @@ function setupNotebookTabs() {
       return;
     }
 
-    const useBlankMobilePage =
-      window.matchMedia("(max-width: 700px)").matches && page.mobileSrc;
-
-    pageImage.src = useBlankMobilePage
-      ? "images/NoteBookOverlayBlank.png"
-      : page.src;
-    pageImage.classList.toggle(
-      "is-blank-mobile-page",
-      Boolean(useBlankMobilePage),
-    );
-    pageImage.alt = page.alt;
+    itemsImage.src = page.src;
+    itemsImage.alt = page.alt;
     notebook.dataset.notebookPage = pageName;
-
-    const hasMobileContent = Boolean(page.mobileSrc);
-    mobileContent.hidden = !hasMobileContent;
-    mobileContent.src = page.mobileSrc || "";
-    mobileContent.alt = hasMobileContent ? `${pageName} notebook content` : "";
 
     tabs.forEach((tab) => {
       const isActive = tab.dataset.notebookTarget === pageName;
@@ -1135,7 +1117,7 @@ overlay.addEventListener("click", (event) => {
 
   const overlayArtwork = overlayContent.querySelector(
     [
-      ".notebook-page-image",
+      ".notebook-base",
       ".laptop-overlay .device-frame",
       ".camera-overlay .device-frame",
       ".phone-overlay > .device-frame",
