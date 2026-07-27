@@ -871,8 +871,8 @@ img {
   top: 50%;
   bottom: auto;
   width: auto;
-  height: 100svh;
-  height: 100dvh;
+  height: 125svh;
+  height: 125dvh;
   aspect-ratio: 2 / 1;
 }
 
@@ -917,7 +917,7 @@ img {
 ------------------------------ */
 
 .notebook-tabs {
-  --notebook-tab-width: 5%;
+  --notebook-tab-width: 6%;
   --tab-rest-shift: -0.1%;
   --tab-hover-shift: 0%;
   --tab-active-shift: -0.1%;
@@ -959,18 +959,18 @@ img {
 }
 
 .notebook-tab-about {
-  left: 80.7%;
-  top: 17.3%;
+  left: 78%;
+  top: 25.33%;
 }
 
 .notebook-tab-journey {
-  left: 80.6%;
-  top: 24%;
+  left: 77.9%;
+  top: 31.33%;
 }
 
 .notebook-tab-skills {
-  left: 79.9%;
-  top: 30.2%;
+  left: 77.3%;
+  top: 36.83%;
 }
 
 .notebook-tab:hover:not([aria-disabled="true"]),
@@ -1015,15 +1015,11 @@ img {
   position: absolute;
   z-index: 3;
   left: 25%;
-  top: -3.75%;
+  top: 12%;
   width: 51.458%;
   height: auto;
   max-width: none;
   pointer-events: none;
-}
-
-.notebook-overlay[data-notebook-page="skills"] .notebook-items {
-  top: 0;
 }
 
 .device-frame {
@@ -1649,9 +1645,9 @@ img {
   .notebook-overlay {
     top: auto;
     bottom: 0;
-    width: 300vw;
+    width: 470vw;
     height: auto;
-    --overlay-x: -70%;
+    --overlay-x: -67%;
     --overlay-y: 0%;
   }
 
@@ -1661,6 +1657,21 @@ img {
 
   .notebook-tabs {
     z-index: 5;
+  }
+
+  .notebook-tab-about {
+    left: 72.5%;
+    top: 64%;
+  }
+
+  .notebook-tab-journey {
+    left: 72.4%;
+    top: 72%;
+  }
+
+  .notebook-tab-skills {
+    left: 71.8%;
+    top: 80%;
   }
 
   .phone-overlay {
