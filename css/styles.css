@@ -1037,18 +1037,17 @@ img {
 }
 
 .laptop-screen {
+  --laptop-home-left: 0.85%;
+  --laptop-home-top: 0.6%;
+  --laptop-home-width: 98.7%;
+  --laptop-home-height: 99.5%;
+
   left: 18.85%;
   top: 4.44%;
   width: 62.2%;
   height: 85.83%;
-  padding: clamp(12px, 2.2vw, 30px);
-  background:
-    radial-gradient(
-      circle at 72% 18%,
-      rgba(54, 124, 176, 0.28),
-      transparent 35%
-    ),
-    linear-gradient(145deg, #172330, #090d12 68%);
+  padding: 0;
+  background: #4e79a7;
 }
 
 .camera-screen {
@@ -1369,6 +1368,15 @@ img {
   background: #fff4d8;
 }
 
+.gallery-image-button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+
 .koikuro-gallery img {
   width: 100%;
   aspect-ratio: 1;
@@ -1383,58 +1391,195 @@ img {
   text-align: center;
 }
 
+.koikuro-carousel-controls {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 2vw, 24px);
+  margin-top: clamp(10px, 1.5vw, 18px);
+}
+
+.koikuro-carousel-controls button,
+.koikuro-lightbox-close {
+  display: grid;
+  place-items: center;
+  min-width: 42px;
+  min-height: 42px;
+  padding: 6px 12px;
+  border: 2px solid #20252b;
+  color: #f1dfb7;
+  background: #20252b;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.carousel-status {
+  min-width: 4em;
+  font-weight: 700;
+  text-align: center;
+}
+
 .koikuro-logo-gallery {
   grid-template-columns: minmax(0, 1fr);
   max-width: 60%;
   margin-inline: auto;
 }
 
-.screen-kicker {
-  margin: 0 0 clamp(12px, 2vw, 28px);
-  color: #86c8ff;
-  font-size: clamp(10px, 1.25vw, 17px);
+.koikuro-lightbox {
+  position: fixed;
+  z-index: 12;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: clamp(54px, 8vw, 86px) 18px 24px;
+  background: rgba(12, 9, 8, 0.88);
+  pointer-events: auto;
+}
+
+.koikuro-lightbox[hidden] {
+  display: none;
+}
+
+.koikuro-lightbox img {
+  width: auto;
+  max-width: min(92vw, 1100px);
+  height: auto;
+  max-height: 76dvh;
+  object-fit: contain;
+  background: #f1dfb7;
+  box-shadow: 8px 10px 0 rgba(0, 0, 0, 0.55);
+}
+
+.koikuro-lightbox p {
+  margin: 12px 0 0;
+  color: #f1dfb7;
   font-weight: 700;
-  letter-spacing: 0.14em;
+}
+
+.koikuro-lightbox-close {
+  position: absolute;
+  top: max(14px, env(safe-area-inset-top));
+  right: 16px;
+  font-size: 24px;
+}
+
+.laptop-home {
+  position: absolute;
+  inset: 0;
+  background: #4e79a7;
+}
+
+.laptop-home-art {
+  position: absolute;
+  left: var(--laptop-home-left);
+  top: var(--laptop-home-top);
+  width: var(--laptop-home-width);
+  height: var(--laptop-home-height);
+  max-width: none;
+  object-fit: fill;
+  image-rendering: pixelated;
+  pointer-events: none;
 }
 
 .project-desktop {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(12px, 2.5vw, 34px);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(38px, 8vw, 112px);
+  padding-bottom: 5%;
+}
+
+.project-shortcut {
+  --project-float-delay: 0s;
+
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.project-shortcut-black-ice {
+  --project-float-delay: -2s;
 }
 
 .project-icon {
-  display: grid;
-  justify-items: center;
-  gap: clamp(6px, 1vw, 12px);
-  padding: clamp(8px, 1.4vw, 18px);
-  color: #f0f6fb;
-  font-size: clamp(10px, 1.25vw, 16px);
-  font-weight: 700;
-  text-align: center;
-  text-decoration: none;
+  display: block;
+  width: clamp(64px, 10vw, 140px);
+  padding: clamp(4px, 0.45vw, 7px);
   border: 0;
   background: transparent;
-  font-family: inherit;
   cursor: pointer;
+}
+
+.project-icon img {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+  animation: phone-app-float 4s ease-in-out var(--project-float-delay) infinite;
+  transition: filter 120ms linear;
 }
 
 .project-icon:hover,
 .project-icon:focus-visible {
-  background: rgba(134, 200, 255, 0.14);
-  outline: 2px solid #86c8ff;
+  outline: none;
 }
 
-.project-icon-art {
-  display: grid;
-  place-items: center;
-  width: clamp(42px, 7vw, 88px);
-  aspect-ratio: 1;
-  border: clamp(2px, 0.35vw, 4px) solid #86c8ff;
-  color: #86c8ff;
-  background: #172f45;
-  box-shadow: clamp(3px, 0.6vw, 7px) clamp(3px, 0.6vw, 7px) 0 #071019;
-  font-size: clamp(14px, 2.2vw, 28px);
+.project-icon:hover img,
+.project-icon:focus-visible img {
+  animation: phone-app-icon-wiggle 360ms ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 clamp(2px, 0.35vw, 5px) #f6f8fa);
+}
+
+.project-tooltip {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  width: clamp(138px, 16vw, 220px);
+  padding: clamp(7px, 0.8vw, 11px);
+  border: clamp(2px, 0.22vw, 3px) solid #14181f;
+  color: #14181f;
+  background: #f6f8fa;
+  box-shadow: clamp(3px, 0.45vw, 6px) clamp(3px, 0.45vw, 6px) 0
+    rgba(20, 24, 31, 0.55);
+  font-size: clamp(8px, 0.9vw, 13px);
+  line-height: 1.25;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-50%) scale(0.96);
+  transition:
+    opacity 100ms linear,
+    transform 100ms steps(2, end);
+}
+
+.project-shortcut-sakecat .project-tooltip {
+  right: calc(100% + clamp(7px, 0.8vw, 12px));
+  transform-origin: right center;
+}
+
+.project-shortcut-black-ice .project-tooltip {
+  left: calc(100% + clamp(7px, 0.8vw, 12px));
+  transform-origin: left center;
+}
+
+.project-tooltip strong,
+.project-tooltip span {
+  display: block;
+}
+
+.project-tooltip strong {
+  margin-bottom: 0.35em;
+}
+
+.project-open {
+  display: none;
+}
+
+.project-shortcut:hover .project-tooltip,
+.project-shortcut:focus-within .project-tooltip {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
 }
 
 .laptop-browser {
@@ -1599,7 +1744,63 @@ img {
     top: 18.889%;
     width: 16.354%;
     height: 37.222%;
-    padding: clamp(8px, 2.2vw, 12px);
+    padding: 0;
+  }
+
+  .project-desktop {
+    gap: clamp(28px, 13vw, 52px);
+    padding-bottom: 22%;
+  }
+
+  .project-icon {
+    width: 29vw;
+  }
+
+  .project-shortcut-sakecat .project-tooltip,
+  .project-shortcut-black-ice .project-tooltip {
+    top: calc(100% + 5px);
+    left: 50%;
+    right: auto;
+    width: min(46vw, 190px);
+    padding: 10px;
+    font-size: clamp(12px, 3.6vw, 15px);
+    line-height: 1.35;
+    transform: translateX(-50%) scale(0.96);
+    transform-origin: top center;
+  }
+
+  .project-shortcut .project-tooltip,
+  .project-shortcut:not(.is-selected):hover .project-tooltip,
+  .project-shortcut:not(.is-selected):focus-within .project-tooltip {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-50%) scale(0.96);
+  }
+
+  .project-shortcut.is-selected .project-tooltip {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) scale(1);
+  }
+
+  .project-open {
+    display: block;
+    width: 100%;
+    margin-top: 0.65em;
+    padding: 0.45em 0.6em;
+    border: 2px solid #14181f;
+    color: #f6f8fa;
+    background: #284c7a;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .project-open:active,
+  .project-open:focus-visible {
+    color: #14181f;
+    background: #89b6e8;
+    outline: 2px solid #f6f8fa;
   }
 
   .camera-overlay {
@@ -1619,6 +1820,52 @@ img {
     width: min(724.638vw, 320svh);
     /* The mobile bag export has 34px of transparent canvas below the sprite. */
     --overlay-y: 9.444%;
+  }
+
+  .koikuro-detail {
+    left: 41.3%;
+    top: 8%;
+    width: 17.4%;
+    height: 80%;
+    padding: 12px;
+    border-width: 4px;
+    box-shadow: 5px 6px 0 rgba(20, 11, 7, 0.55);
+  }
+
+  .koikuro-detail h1 {
+    margin: 8px 0 12px;
+    font-size: clamp(18px, 6vw, 28px);
+    text-align: center;
+  }
+
+  .detail-kicker {
+    margin-top: 12px;
+    text-align: center;
+  }
+
+  .koikuro-logo-gallery {
+    max-width: 100%;
+  }
+
+  .koikuro-logo-gallery img {
+    height: auto;
+    max-height: 52dvh;
+    aspect-ratio: auto;
+    object-fit: contain;
+  }
+
+  .koikuro-carousel .koikuro-gallery {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 100%;
+    margin-inline: auto;
+  }
+
+  .koikuro-carousel figure[hidden] {
+    display: none;
+  }
+
+  .koikuro-carousel-controls {
+    display: flex;
   }
 
   .bag-item {

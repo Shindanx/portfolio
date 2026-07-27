@@ -706,26 +706,50 @@ const portfolioSections = {
     <div class="device-overlay laptop-overlay">
       <div class="device-screen laptop-screen">
         <div class="laptop-home">
-          <p class="screen-kicker">SELECT A PROJECT</p>
+          <img
+            class="laptop-home-art"
+            src="images/LaptopHomeScreen.png"
+            alt=""
+            draggable="false"
+          />
           <div class="project-desktop">
-          <button
-            class="project-icon"
-            type="button"
-            data-project-url="https://shindanx.github.io/sakecat/"
-            data-project-title="SakeCat"
-          >
-            <span class="project-icon-art" aria-hidden="true">01</span>
-            <span>SakeCat</span>
-          </button>
-          <button
-            class="project-icon"
-            type="button"
-            data-project-url="https://shindanx.github.io/black-ice-tailoring/"
-            data-project-title="Black Ice Tailoring"
-          >
-            <span class="project-icon-art" aria-hidden="true">02</span>
-            <span>Black Ice Tailoring</span>
-          </button>
+            <div class="project-shortcut project-shortcut-sakecat">
+              <button
+                class="project-icon"
+                type="button"
+                data-project-url="https://shindanx.github.io/sakecat/"
+                data-project-title="SakeCat"
+                aria-describedby="sakecat-description"
+                aria-label="Open SakeCat website"
+                aria-expanded="false"
+              >
+                <img src="images/SakeCatIcon.png" alt="" draggable="false" />
+              </button>
+              <div class="project-tooltip" id="sakecat-description">
+                <strong>SakeCat</strong>
+                <span>A playful, character-led website with a warm Japanese-inspired identity.</span>
+                <button class="project-open" type="button">Open website</button>
+              </div>
+            </div>
+
+            <div class="project-shortcut project-shortcut-black-ice">
+              <button
+                class="project-icon"
+                type="button"
+                data-project-url="https://shindanx.github.io/black-ice-tailoring/"
+                data-project-title="Black Ice Tailoring"
+                aria-describedby="black-ice-description"
+                aria-label="Open Black Ice Tailoring website"
+                aria-expanded="false"
+              >
+                <img src="images/BlackIceIcon.png" alt="" draggable="false" />
+              </button>
+              <div class="project-tooltip" id="black-ice-description">
+                <strong>Black Ice Tailoring</strong>
+                <span>A refined tailoring website built around an elegant, high-contrast visual identity.</span>
+                <button class="project-open" type="button">Open website</button>
+              </div>
+            </div>
           </div>
         </div>
         <div class="laptop-browser" hidden>
@@ -837,6 +861,12 @@ const portfolioSections = {
         <div class="koikuro-detail-content"></div>
       </section>
     </div>
+
+    <div class="koikuro-lightbox" hidden role="dialog" aria-modal="true" aria-label="Expanded project image">
+      <button class="koikuro-lightbox-close" type="button" aria-label="Close expanded image">×</button>
+      <img src="" alt="" />
+      <p></p>
+    </div>
   `,
 };
 
@@ -938,6 +968,13 @@ function setupNotebookTabs() {
 }
 
 function closeOverlay() {
+  const brandDetail = overlayContent.querySelector(".koikuro-detail:not([hidden])");
+
+  if (brandDetail) {
+    overlayContent.querySelector(".koikuro-back")?.click();
+    return;
+  }
+
   overlay.classList.remove("is-open");
   overlay.setAttribute("aria-hidden", "true");
 
@@ -959,14 +996,42 @@ function setupLaptopBrowser() {
   const browserTitle = overlayContent.querySelector(".browser-title");
   const backButton = overlayContent.querySelector(".browser-back");
   const projectButtons = overlayContent.querySelectorAll(".project-icon");
+  const projectShortcuts = overlayContent.querySelectorAll(".project-shortcut");
+  const mobileProjects = window.matchMedia("(max-width: 700px)");
+
+  function openProject(button) {
+    projectFrame.src = button.dataset.projectUrl;
+    browserTitle.textContent = button.dataset.projectTitle;
+    home.hidden = true;
+    browserView.hidden = false;
+    backButton.focus();
+  }
+
+  function selectMobileProject(selectedShortcut) {
+    projectShortcuts.forEach((shortcut) => {
+      const isSelected = shortcut === selectedShortcut;
+
+      shortcut.classList.toggle("is-selected", isSelected);
+      shortcut
+        .querySelector(".project-icon")
+        ?.setAttribute("aria-expanded", String(isSelected));
+    });
+  }
 
   projectButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      projectFrame.src = button.dataset.projectUrl;
-      browserTitle.textContent = button.dataset.projectTitle;
-      home.hidden = true;
-      browserView.hidden = false;
-      backButton.focus();
+      if (mobileProjects.matches) {
+        selectMobileProject(button.closest(".project-shortcut"));
+        return;
+      }
+
+      openProject(button);
+    });
+  });
+
+  projectShortcuts.forEach((shortcut) => {
+    shortcut.querySelector(".project-open")?.addEventListener("click", () => {
+      openProject(shortcut.querySelector(".project-icon"));
     });
   });
 
@@ -974,6 +1039,7 @@ function setupLaptopBrowser() {
     projectFrame.src = "about:blank";
     browserView.hidden = true;
     home.hidden = false;
+    selectMobileProject(null);
     projectButtons[0].focus();
   });
 }
@@ -989,40 +1055,118 @@ function setupKoiKuroBag() {
     sketches: `
       <p class="detail-kicker">PROCESS</p>
       <h1>Logo Sketches</h1>
-      <div class="koikuro-gallery koikuro-sketches">
-        <figure><img src="images/First-Sketch.png" alt="Early KoiKuro logo sketches" /><figcaption>First exploration</figcaption></figure>
-        <figure><img src="images/Sketch-Mid.png" alt="Intermediate KoiKuro logo sketches" /><figcaption>Developing the idea</figcaption></figure>
-        <figure><img src="images/Sketch-Final.png" alt="Final KoiKuro logo sketch" /><figcaption>Final direction</figcaption></figure>
+      <div class="koikuro-carousel" aria-label="Logo sketches gallery">
+        <div class="koikuro-gallery koikuro-sketches">
+          <figure><button class="gallery-image-button" type="button"><img src="images/First-Sketch.png" alt="Early KoiKuro logo sketches" /></button><figcaption>First exploration</figcaption></figure>
+          <figure><button class="gallery-image-button" type="button"><img src="images/Sketch-Mid.png" alt="Intermediate KoiKuro logo sketches" /></button><figcaption>Developing the idea</figcaption></figure>
+          <figure><button class="gallery-image-button" type="button"><img src="images/Sketch-Final.png" alt="Final KoiKuro logo sketch" /></button><figcaption>Final direction</figcaption></figure>
+        </div>
+        <div class="koikuro-carousel-controls">
+          <button class="carousel-previous" type="button" aria-label="Previous image">←</button>
+          <span class="carousel-status" aria-live="polite"></span>
+          <button class="carousel-next" type="button" aria-label="Next image">→</button>
+        </div>
       </div>
     `,
     logo: `
       <p class="detail-kicker">FINAL IDENTITY</p>
       <h1>KoiKuro Logo</h1>
       <div class="koikuro-gallery koikuro-logo-gallery">
-        <figure><img src="images/Logo-Final.png" alt="Final KoiKuro logo" /><figcaption>Final logo</figcaption></figure>
+        <figure><button class="gallery-image-button" type="button"><img src="images/Logo-Final.png" alt="Final KoiKuro logo" /></button><figcaption>Final logo</figcaption></figure>
       </div>
     `,
     mockups: `
       <p class="detail-kicker">IN CONTEXT</p>
       <h1>Brand Mockups</h1>
-      <div class="koikuro-gallery koikuro-mockups">
-        <figure><img src="images/mockup-cup.png" alt="KoiKuro cup mockup" /><figcaption>Takeaway cup</figcaption></figure>
-        <figure><img src="images/mockup-napkin.png" alt="KoiKuro napkin mockup" /><figcaption>Napkin</figcaption></figure>
-        <figure><img src="images/mockup-sign.png" alt="KoiKuro sign mockup" /><figcaption>Restaurant sign</figcaption></figure>
+      <div class="koikuro-carousel" aria-label="Brand mockups gallery">
+        <div class="koikuro-gallery koikuro-mockups">
+          <figure><button class="gallery-image-button" type="button"><img src="images/mockup-cup.png" alt="KoiKuro cup mockup" /></button><figcaption>Takeaway cup</figcaption></figure>
+          <figure><button class="gallery-image-button" type="button"><img src="images/mockup-napkin.png" alt="KoiKuro napkin mockup" /></button><figcaption>Napkin</figcaption></figure>
+          <figure><button class="gallery-image-button" type="button"><img src="images/mockup-sign.png" alt="KoiKuro sign mockup" /></button><figcaption>Restaurant sign</figcaption></figure>
+        </div>
+        <div class="koikuro-carousel-controls">
+          <button class="carousel-previous" type="button" aria-label="Previous image">←</button>
+          <span class="carousel-status" aria-live="polite"></span>
+          <button class="carousel-next" type="button" aria-label="Next image">→</button>
+        </div>
       </div>
     `,
   };
+
+  const lightbox = overlayContent.querySelector(".koikuro-lightbox");
+  const lightboxImage = lightbox.querySelector("img");
+  const lightboxCaption = lightbox.querySelector("p");
+  const lightboxClose = lightbox.querySelector(".koikuro-lightbox-close");
+  const mobileBrandGallery = window.matchMedia("(max-width: 700px)");
+  let lastExpandedImage = null;
+
+  function closeLightbox() {
+    lightbox.hidden = true;
+    lightboxImage.src = "";
+    lastExpandedImage?.focus();
+  }
+
+  function setupBrandGallery() {
+    const carousel = detailContent.querySelector(".koikuro-carousel");
+
+    if (carousel && mobileBrandGallery.matches) {
+      const slides = [...carousel.querySelectorAll("figure")];
+      const status = carousel.querySelector(".carousel-status");
+      let activeSlide = 0;
+
+      function showSlide(nextSlide) {
+        activeSlide = (nextSlide + slides.length) % slides.length;
+
+        slides.forEach((slide, index) => {
+          slide.hidden = index !== activeSlide;
+        });
+
+        status.textContent = `${activeSlide + 1} / ${slides.length}`;
+      }
+
+      carousel
+        .querySelector(".carousel-previous")
+        .addEventListener("click", () => showSlide(activeSlide - 1));
+      carousel
+        .querySelector(".carousel-next")
+        .addEventListener("click", () => showSlide(activeSlide + 1));
+      showSlide(0);
+    }
+
+    detailContent.querySelectorAll(".gallery-image-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        const image = button.querySelector("img");
+
+        lastExpandedImage = button;
+        lightboxImage.src = image.src;
+        lightboxImage.alt = image.alt;
+        lightboxCaption.textContent =
+          button.closest("figure").querySelector("figcaption")?.textContent || "";
+        lightbox.hidden = false;
+        lightboxClose.focus();
+      });
+    });
+  }
 
   itemButtons.forEach((button) => {
     button.addEventListener("click", () => {
       detailContent.innerHTML = brandSections[button.dataset.brandSection];
       bagItems.hidden = true;
       detail.hidden = false;
+      setupBrandGallery();
       backButton.focus();
     });
   });
 
+  lightboxClose.addEventListener("click", closeLightbox);
+  lightbox.addEventListener("click", (event) => {
+    if (event.target === lightbox) {
+      closeLightbox();
+    }
+  });
+
   backButton.addEventListener("click", () => {
+    closeLightbox();
     detail.hidden = true;
     bagItems.hidden = false;
     detailContent.innerHTML = "";
