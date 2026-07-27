@@ -2,286 +2,225 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>João — UI/UX Portfolio</title>
-    <link rel="stylesheet" href="./css/styles.css" />
-    <script src="./js/scripts.js" defer></script>
-  </head>
-  <body>
-    <div id="cursor-pointer"></div>
-    <div id="cursor-frame"></div>
 
-    <div class="layout">
-      <nav>
-        <div>
-          <div class="nav-name">
-            <span>João<br />Silva</span>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>João Silva — Portfolio</title>
+
+    <link rel="icon" type="image/png" href="images/Logo-Final.png" />
+    <link rel="stylesheet" href="css/styles.css?v=lighting-33" />
+    <script src="js/scripts.js?v=lighting-33" defer></script>
+  </head>
+
+  <body>
+    <main
+      class="desk"
+      aria-label="Interactive portfolio desk"
+      aria-describedby="deskInstructions"
+      tabindex="0"
+    >
+      <p class="desk-instructions" id="deskInstructions">
+        Drag or swipe diagonally to explore the desk.
+      </p>
+
+      <div class="desk-canvas">
+        <!-- About -->
+        <button
+          class="desk-object notebook"
+          data-section="about"
+          aria-label="Open About Me"
+        >
+          <img src="images/Notebook.png" alt="" draggable="false" />
+          <span class="object-label">About me</span>
+        </button>
+
+        <!-- UI/UX and web projects -->
+        <button
+          class="desk-object laptop"
+          data-section="projects"
+          aria-label="Open UI and web projects"
+        >
+          <span class="laptop-image">
+            <img
+              class="laptop-off"
+              src="images/Laptop.png"
+              alt=""
+              draggable="false"
+            />
+
+            <img
+              class="laptop-on"
+              src="images/LaptopHover.png"
+              alt=""
+              draggable="false"
+            />
+          </span>
+
+          <span class="object-label">Projects</span>
+        </button>
+
+        <!-- Video and photography -->
+        <button
+          class="desk-object camera"
+          data-section="media"
+          aria-label="Open photography and video work"
+        >
+          <img src="images/Camera.png" alt="" draggable="false" />
+          <span class="object-label">Photo & video</span>
+        </button>
+
+        <!-- Contact -->
+        <button
+          class="desk-object phone"
+          data-section="contact"
+          aria-label="Open contact information"
+        >
+          <span class="phone-image">
+            <img
+              class="phone-off"
+              src="images/PhoneOff.png"
+              alt=""
+              draggable="false"
+            />
+
+            <img
+              class="phone-on"
+              src="images/PhoneOn.png"
+              alt=""
+              draggable="false"
+            />
+          </span>
+
+          <span class="object-label">Contact</span>
+        </button>
+
+        <!-- Branding -->
+        <button
+          class="desk-object koikuro"
+          data-section="branding"
+          aria-label="Open KoiKuro branding project"
+        >
+          <img src="images/DeliveryBag.png" alt="" draggable="false" />
+          <span class="object-label">Branding</span>
+        </button>
+
+        <div class="desk-clock-control">
+          <button
+            class="desk-clock"
+            id="deskClock"
+            type="button"
+            aria-label="Choose scene time"
+            aria-expanded="false"
+            aria-controls="deskTimeMenu"
+          >
+            <img
+              class="desk-clock-art"
+              src="images/AlarmClock.png?v=clock-shadow-2"
+              alt=""
+              draggable="false"
+            />
+            <span class="desk-clock-screen">
+              <time class="desk-clock-time" id="deskClockTime">00:00</time>
+              <span class="desk-clock-period" id="deskClockPeriod"
+                >EVENING</span
+              >
+            </span>
+          </button>
+          <div
+            class="desk-time-menu"
+            id="deskTimeMenu"
+            role="group"
+            aria-label="Choose the scene lighting"
+            hidden
+          >
             <button
-              class="theme-toggle"
-              id="themeToggle"
-              aria-label="Toggle theme"
+              type="button"
+              data-time-mode="device"
+              aria-label="Use device time"
             >
-              <span class="toggle-slider"></span>
+              <span class="time-mode-icon" aria-hidden="true">↻</span>
+            </button>
+            <button
+              type="button"
+              data-time-mode="morning"
+              aria-label="Use early morning lighting"
+            >
+              <span class="time-mode-icon" aria-hidden="true">◒</span>
+            </button>
+            <button
+              type="button"
+              data-time-mode="midday"
+              aria-label="Use midday lighting"
+            >
+              <span class="time-mode-icon" aria-hidden="true">☀</span>
+            </button>
+            <button
+              type="button"
+              data-time-mode="evening"
+              aria-label="Use evening lighting"
+            >
+              <span class="time-mode-icon" aria-hidden="true">◐</span>
+            </button>
+            <button
+              type="button"
+              data-time-mode="night"
+              aria-label="Use night lighting"
+            >
+              <span class="time-mode-icon" aria-hidden="true">☾</span>
             </button>
           </div>
-          <div class="nav-title">UI/UX Dev</div>
-        </div>
-        <ul class="nav-links">
-          <li>
-            <a href="#home" class="active"><span></span>Home</a>
-          </li>
-          <li>
-            <a href="#about"><span></span>About</a>
-          </li>
-          <li>
-            <a href="#work"><span></span>Work</a>
-          </li>
-          <li>
-            <a href="#video"><span></span>Video</a>
-          </li>
-          <li>
-            <a href="#contact"><span></span>Contact</a>
-          </li>
-        </ul>
-        <div class="nav-contact">
-          <a href="mailto:joao.carneirosilva98@gmail.com"
-            >joao.carneirosilva98@gmail.com</a
-          >
-          <a href="https://linkedin.com/in/joao-silva98" target="_blank"
-            >LinkedIn ↗</a
-          >
-          <a href="https://github.com/Shindanx" target="_blank">GitHub ↗</a>
-        </div>
-      </nav>
-
-      <main>
-        <div class="section-row">
-          <section id="home">
-            <p class="hero-eyebrow">Available for internship — Portugal</p>
-            <h1 class="hero-headline">
-              Designing things<br />that <em>feel right</em><br />to use.
-            </h1>
-            <p class="hero-body">
-              UI/UX development student based in Portugal. I care about the
-              space between a design that looks good and one that actually works
-              — clean code, considered interfaces, real attention to detail.
-            </p>
-            <a href="#work" class="hero-cta">
-              View my work
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path
-                  d="M3 8h10M9 4l4 4-4 4"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </a>
-          </section>
         </div>
 
-        <div class="section-row fade-in">
-          <section id="about">
-            <p class="section-label">About</p>
-            <div class="about-grid">
-              <div class="about-text">
-                <p>
-                  I'm currently enrolled in a web development program with a
-                  focus on UI/UX — learning the full stack from wireframe to
-                  shipped code. I gravitate toward projects where visual clarity
-                  and usability have to work together.
-                </p>
-                <p>
-                  Outside of coursework I've worked on branding and motion
-                  projects — designing a logo and producing promotional and
-                  event videos. I like work that has a purpose beyond looking
-                  polished.
-                </p>
-                <p>
-                  Looking for an internship where I can contribute from day one
-                  and keep growing fast.
-                </p>
-              </div>
-              <div>
-                <ul class="skills-list">
-                  <li>HTML & CSS</li>
-                  <li>JavaScript</li>
-                  <li>UI/UX Design</li>
-                  <li>Figma</li>
-                  <li>Responsive Layouts</li>
-                  <li>Brand Identity</li>
-                  <li>Video Production</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <div class="section-row fade-in">
-          <section id="work">
-            <p class="section-label">Selected work</p>
-            <div class="work-list">
-                <!-- Sake Cat -->
-              <a href="#" class="work-item" data-project-url="../works/website/ExercicioWeb1/index.html">
-                <div>
-                  <p class="work-meta">Website — HTML / CSS</p>
-                  <h2 class="work-title">SakeCat Restaurant</h2>
-                  <p class="work-desc">
-                    A four-page concept restaurant site for a cat-chef brand.
-                    Full design system with brand variables, responsive layouts,
-                    CSS-only modal, and a hand-built design identity.
-                  </p>
-                  <span class="work-tag">Live project</span>
-                </div>
-                <span class="work-arrow">→</span>
-              </a>
-              <!-- KoiKuro -->
-              <a href="#" class="work-item" data-project-url="koikuro">
-                <div>
-                  <p class="work-meta">Branding — Identity Design</p>
-                  <h2 class="work-title">KoiKuro Logo</h2>
-                  <p class="work-desc">
-                    Brand mark born from the SakeCat concept — a cat-chef
-                    composition featuring a koi fish on a plate with ripple
-                    effects.
-                  </p>
-                  <span class="work-tag">Logo / Identity</span>
-                </div>
-                <span class="work-arrow">→</span>
-              </a>
-              <!-- Mar Medieval
-              <a href="#" class="work-item">
-                <div>
-                  <p class="work-meta">Prototype — Figma</p>
-                  <h2 class="work-title">Medieval Fairs Map of Portugal</h2>
-                  <p class="work-desc">
-                    Interactive Figma prototype mapping medieval fair events by
-                    district. Hover effects, district highlighting, and
-                    click-to-focus interactions using Smart Animate.
-                  </p>
-                  <span class="work-tag">UX Prototype</span>
-                </div>
-                <span class="work-arrow">→</span>
-              </a>
-            </div> -->
-          </section>
-        </div>
-
-        <div class="video-grid">
-  <button class="video-item" data-video-url="https://www.youtube.com/embed/2loHh-z2v_0?si=5aStrkzUIvOecwQn">
-    <img
-      class="video-thumb"
-      src="https://img.youtube.com/vi/2loHh-z2v_0/hqdefault.jpg"
-      alt="Promotional video thumbnail"
-    />
-    <div class="video-info">
-      <p class="video-type">Promotional</p>
-      <p class="video-name">Label Process</p>
-    </div>
-    <div class="video-play">▶</div>
-  </button>
-
-  <button class="video-item" data-video-url="https://www.youtube.com/embed/Ph3IGqvWCB8?si=5vzy2f09lhaFh1RT">
-    <img
-      class="video-thumb"
-      src="https://img.youtube.com/vi/Ph3IGqvWCB8/hqdefault.jpg"
-      alt="Event video thumbnail"
-    />
-    <div class="video-info">
-      <p class="video-type">Promotional</p>
-      <p class="video-name">Bike Fitting</p>
-    </div>
-    <div class="video-play">▶</div>
-  </button>
-
-  <button class="video-item" data-video-url="https://www.youtube.com/embed/25fQgiUHwxQ?si=0QRXoje9Lz07tsuY">
-    <img
-      class="video-thumb"
-      src="https://img.youtube.com/vi/25fQgiUHwxQ/hqdefault.jpg"
-      alt="Video thumbnail"
-    />
-    <div class="video-info">
-      <p class="video-type">Promotional</p>
-      <p class="video-name">Game Project Trailer</p>
-    </div>
-    <div class="video-play">▶</div>
-  </button>
-
-  <a href="https://www.youtube.com/playlist?list=PLXK7mN6yKKY1Xsm5F9N0LLBeJJBZTmdMg" 
-   target="_blank" 
-   rel="noopener noreferrer" 
-   class="video-item video-more bypass-overlay">
-  + See Entire Playlist ↗
-</a>
-</div>
-
-        <div class="section-row fade-in">
-          <section id="contact">
-            <p class="section-label">Contact</p>
-            <p class="contact-line">
-              Let's talk —<br />
-              <a href="mailto:joao.carneirosilva98@gmail.com"
-                >joao.carneirosilva98@gmail.com</a
-              >
-            </p>
-            <p class="contact-note">
-              Open to internship opportunities in Portugal or remote. Happy to
-              share more work, hop on a call, or answer any questions.
-            </p>
-          </section>
-        </div>
-      </main>
-    </div>
-
-    <footer>
-      <span>João Silva — UI/UX Developer</span>
-      <span>Portugal, 2026</span>
-    </footer>
-    <div class="project-overlay" id="projectOverlay">
-  <div class="overlay-bar">
-    <span class="overlay-title" id="overlayProjectTitle">Project Viewer</span>
-    <button class="close-project-btn" id="closeProjectBtn">✕ Close & Return</button>
-  </div>
-  
-  <iframe class="project-frame" id="projectIframe" src="" style="display: none;"></iframe>
-
-  <div class="project-case-study" id="projectCaseStudy" style="display: none;">
-    <div id="case-study-koikuro" class="case-study-content">
-      <div class="case-hero">
-        <p class="case-label">Main Identity Mark</p>
-        <div class="logo-display-main">
-          <img src="./works/logo/LogoTypography.webp" alt="KoiKuro Main Logo Layout" />
-        </div>
+        <img
+          class="desk-lighting-art desk-lighting-rays"
+          src="images/SunRays.png?v=lighting-13"
+          alt=""
+          aria-hidden="true"
+          draggable="false"
+        />
+        <img
+          class="desk-lighting-art desk-lighting-glow"
+          src="images/ContactLights.png?v=lighting-13"
+          alt=""
+          aria-hidden="true"
+          draggable="false"
+        />
+        <img
+          class="desk-lighting-art desk-lighting-contacts"
+          src="images/ContactLights.png?v=lighting-13"
+          alt=""
+          aria-hidden="true"
+          draggable="false"
+        />
       </div>
-      
-      <div class="case-variants-grid">
-        <div class="variant-card">
-          <p class="case-label">Variant 01 — No Typograhpy</p>
-          <div class="logo-display-sub">
-            <img src="./works/logo/LogoNormal.webp" alt="KoiKuro No Typograhpy Variant" />
-          </div>
-          <p class="variant-desc">For use in website.</p>
-        </div>
 
-        <div class="variant-card">
-          <p class="case-label">Variant 02 — Alternative Background Variant</p>
-          <div class="logo-display-sub">
-            <img src="./works/logo/LogoRed.webp" alt="KoiKuro Red Variant" />
-          </div>
-          <p class="variant-desc">Isolated brand mark designed for micro-scaling down to 16x16px favicons, app icons, and social vectors.</p>
-        </div>
+      <div class="lighting-dark-filter" aria-hidden="true"></div>
+      <div class="lighting-scene-wash" aria-hidden="true"></div>
+      <div
+        class="lighting-dust lighting-moves-with-desk"
+        aria-hidden="true"
+      ></div>
+    </main>
 
-        <div class="variant-card">
-          <p class="case-label">Variant 03 — Mono Chrome Variant</p>
-          <div class="logo-display-sub inverted-bg">
-            <img src="./works/logo/LogoMono.webp" alt="KoiKuro Mono Variant" />
-          </div>
-          <p class="variant-desc">Single-ink configuration stripped of gradient depth, calibrated for clean merchandise embroidery or dark UI system integration.</p>
-        </div>
+    <!-- Reusable overlay -->
+    <section class="portfolio-overlay" id="portfolioOverlay" aria-hidden="true">
+      <div
+        class="overlay-panel"
+        id="overlayPanel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="overlayTitle"
+      >
+        <button
+          class="overlay-close"
+          id="overlayClose"
+          aria-label="Close section"
+        >
+          ×
+        </button>
+
+        <div id="overlayContent"></div>
       </div>
-    </div>
-  </div>
-</div>
+    </section>
   </body>
 </html>
