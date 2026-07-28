@@ -1787,9 +1787,9 @@ img {
 
   .laptop-overlay {
     /* Tight 161 x 272 crop of the former 960 x 360 transparent export. */
-    width: min(121.511vw, 53.667svh);
+    width: min(96vw, 53.667svh);
     aspect-ratio: 161 / 272;
-    --overlay-x: -49.69%;
+    --overlay-x: -50%;
     --overlay-y: 0.37%;
   }
 
@@ -1797,17 +1797,17 @@ img {
     left: 1.242%;
     top: 7.353%;
     width: 97.516%;
-    height: 49.265%;
+    height: 43.75%;
     padding: 0;
   }
 
   .project-desktop {
-    gap: clamp(28px, 13vw, 52px);
+    gap: clamp(18px, 8vw, 32px);
     padding-bottom: 22%;
   }
 
   .project-icon {
-    width: 29vw;
+    width: 24vw;
   }
 
   .project-shortcut-sakecat .project-tooltip,
@@ -1815,7 +1815,7 @@ img {
     top: calc(100% + 5px);
     left: 50%;
     right: auto;
-    width: min(46vw, 190px);
+    width: min(42vw, 170px);
     padding: 10px;
     font-size: clamp(12px, 3.6vw, 15px);
     line-height: 1.35;
