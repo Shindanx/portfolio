@@ -223,8 +223,8 @@ img {
   travel at different speeds and fade as they enter and leave the light.
 */
 .lighting-dust {
-  --dust-x-offset: -5vw;
-  --dust-y-offset: -44svh;
+  --dust-x-offset: 7vw;
+  --dust-y-offset: -47svh;
 
   z-index: 10;
   inset: auto;
@@ -234,7 +234,7 @@ img {
   height: min(88svh, 900px);
   overflow: hidden;
   opacity: 0.62;
-  clip-path: polygon(0 0, 47% 0, 100% 100%, 24% 100%);
+  clip-path: polygon(0 0, 47% 0, 100% 100%, 10% 100%);
   mix-blend-mode: screen;
   filter: hue-rotate(var(--dust-hue));
   transform: translate3d(
@@ -252,18 +252,18 @@ img {
   content: "";
   pointer-events: none;
   -webkit-mask-image: linear-gradient(
-    125deg,
-    transparent 7%,
-    #000 24%,
-    #000 72%,
-    transparent 93%
+    to top,
+    transparent 3%,
+    #000 16%,
+    #000 82%,
+    transparent 98%
   );
   mask-image: linear-gradient(
-    125deg,
-    transparent 7%,
-    #000 24%,
-    #000 72%,
-    transparent 93%
+    to top,
+    transparent 3%,
+    #000 16%,
+    #000 82%,
+    transparent 98%
   );
 }
 
@@ -301,21 +301,21 @@ img {
 
 @keyframes dust-cross-beam-near {
   from {
-    transform: translate3d(-12%, 16%, 0);
+    transform: translate3d(-5%, 18%, 0);
   }
 
   to {
-    transform: translate3d(18%, -13%, 0);
+    transform: translate3d(4%, -16%, 0);
   }
 }
 
 @keyframes dust-cross-beam-far {
   from {
-    transform: translate3d(-8%, 11%, 0);
+    transform: translate3d(-3%, 14%, 0);
   }
 
   to {
-    transform: translate3d(13%, -9%, 0);
+    transform: translate3d(3%, -12%, 0);
   }
 }
 
