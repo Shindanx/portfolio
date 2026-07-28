@@ -224,7 +224,7 @@ img {
 */
 .lighting-dust {
   --dust-x-offset: 7vw;
-  --dust-y-offset: -47svh;
+  --dust-y-offset: -81svh;
 
   z-index: 10;
   inset: auto;
@@ -1786,19 +1786,18 @@ img {
   }
 
   .laptop-overlay {
-    /* The mobile export's visible laptop occupies 16.56% of its 960px-wide
-       canvas. This lets that laptop reach the viewport edges while its full
-       transparent export remains centred and proportionally scaled. */
-    width: min(724.638vw, 320svh);
-    /* The export has 41px of transparent canvas beneath the visible sprite. */
-    --overlay-y: 11.39%;
+    /* Tight 161 x 272 crop of the former 960 x 360 transparent export. */
+    width: min(121.511vw, 53.667svh);
+    aspect-ratio: 161 / 272;
+    --overlay-x: -49.69%;
+    --overlay-y: 0.37%;
   }
 
   .laptop-screen {
-    left: 41.875%;
-    top: 18.889%;
-    width: 16.354%;
-    height: 37.222%;
+    left: 1.242%;
+    top: 7.353%;
+    width: 97.516%;
+    height: 49.265%;
     padding: 0;
   }
 

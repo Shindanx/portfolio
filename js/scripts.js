@@ -841,7 +841,7 @@ const portfolioSections = {
         </div>
       </div>
       <picture>
-        <source media="(max-width: 700px)" srcset="images/LaptopOverlayMobile.png" />
+        <source media="(max-width: 700px)" srcset="images/LaptopOverlayMobileCropped.webp" />
         <img class="device-frame" src="images/LaptopOverlay.png" alt="" draggable="false" />
       </picture>
     </div>
