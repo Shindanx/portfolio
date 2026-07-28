@@ -146,7 +146,10 @@ img {
   pointer-events: none;
 }
 
-/* 1. Full-screen grade: this is the only lighting layer that never moves. */
+/*
+  1. Full-screen grade: translucent colour layers provide the time-of-day
+  treatment without filtering every pixel behind this element.
+*/
 .lighting-dark-filter {
   z-index: 7;
   background:
@@ -162,13 +165,7 @@ img {
       rgba(var(--grade-tint-end), var(--grade-tint-alpha))
     );
   mix-blend-mode: multiply;
-  backdrop-filter: brightness(var(--scene-brightness))
-    saturate(var(--scene-saturation)) sepia(var(--scene-sepia));
-  -webkit-backdrop-filter: brightness(var(--scene-brightness))
-    saturate(var(--scene-saturation)) sepia(var(--scene-sepia));
-  transition:
-    background 900ms ease,
-    backdrop-filter 900ms ease;
+  transition: background 900ms ease;
 }
 
 /* 2. A true full-screen color wash over the desk and every object. */
