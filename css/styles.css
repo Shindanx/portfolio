@@ -224,7 +224,7 @@ img {
 */
 .lighting-dust {
   --dust-x-offset: -5vw;
-  --dust-y-offset: -12svh;
+  --dust-y-offset: -44svh;
 
   z-index: 10;
   inset: auto;
@@ -276,7 +276,7 @@ img {
       119px 103px,
     radial-gradient(circle, #fff4c8 0 0.6px, transparent 1px) 72px 16px /
       67px 89px;
-  animation: dust-cross-beam-near 18s linear infinite;
+  animation: dust-cross-beam-near 25s linear infinite;
 }
 
 .lighting-dust::after {
@@ -286,7 +286,7 @@ img {
       73px 97px,
     radial-gradient(circle, #ffe1a0 0 0.55px, transparent 0.95px) 9px 63px /
       127px 111px;
-  animation: dust-cross-beam-far 27s linear infinite;
+  animation: dust-cross-beam-far 38s linear infinite;
 }
 
 @keyframes sunlight-breathe {
@@ -301,21 +301,21 @@ img {
 
 @keyframes dust-cross-beam-near {
   from {
-    transform: translate3d(-13%, -8%, 0);
+    transform: translate3d(-12%, 16%, 0);
   }
 
   to {
-    transform: translate3d(19%, 16%, 0);
+    transform: translate3d(18%, -13%, 0);
   }
 }
 
 @keyframes dust-cross-beam-far {
   from {
-    transform: translate3d(-9%, -4%, 0);
+    transform: translate3d(-8%, 11%, 0);
   }
 
   to {
-    transform: translate3d(14%, 12%, 0);
+    transform: translate3d(13%, -9%, 0);
   }
 }
 
