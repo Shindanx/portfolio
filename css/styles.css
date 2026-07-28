@@ -100,8 +100,12 @@ img {
   transform: translate3d(var(--desk-x), var(--desk-y), 0)
     rotate(var(--desk-angle));
   transform-origin: center;
-  will-change: transform;
   z-index: 1;
+}
+
+.desk.is-dragging .desk-canvas,
+.desk.is-dragging .lighting-moves-with-desk {
+  will-change: transform;
 }
 
 .desk-instructions {
@@ -177,7 +181,6 @@ img {
 
 .lighting-moves-with-desk {
   transform: translate3d(var(--light-x), var(--light-y), 0);
-  will-change: transform;
 }
 
 /* Aseprite-authored lighting. The export shares the desk's 960 x 360 canvas,

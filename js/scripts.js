@@ -314,6 +314,12 @@ function applyLightingProfile(profile) {
     return;
   }
 
+  function setStyleProperty(property, value) {
+    if (root.getPropertyValue(property) !== value) {
+      root.setProperty(property, value);
+    }
+  }
+
   const colorProperties = {
     sceneWash: "--scene-wash",
     center: "--grade-center",
@@ -334,18 +340,18 @@ function applyLightingProfile(profile) {
   };
 
   Object.entries(colorProperties).forEach(([field, property]) => {
-    root.setProperty(property, profile[field].join(", "));
+    setStyleProperty(property, profile[field].join(", "));
   });
   Object.entries(numberProperties).forEach(([field, property]) => {
-    root.setProperty(property, profile[field].toFixed(3));
+    setStyleProperty(property, profile[field].toFixed(3));
   });
 
-  root.setProperty(
+  setStyleProperty(
     "--light-glow-brightness",
     (profile.lightBrightness * 1.55).toFixed(3),
   );
-  root.setProperty("--light-hue", `${profile.lightHue.toFixed(2)}deg`);
-  root.setProperty("--dust-hue", `${profile.dustHue.toFixed(2)}deg`);
+  setStyleProperty("--light-hue", `${profile.lightHue.toFixed(2)}deg`);
+  setStyleProperty("--dust-hue", `${profile.dustHue.toFixed(2)}deg`);
 }
 
 function updateClockAndLighting() {
@@ -373,24 +379,32 @@ function updateClockAndLighting() {
         hour12: false,
       });
 
-  if (deskClockTime) {
+  if (deskClockTime && deskClockTime.textContent !== timeText) {
     deskClockTime.textContent = timeText;
+  }
+
+  if (deskClockTime) {
     deskClockTime.dateTime = preset ? timeText : now.toISOString();
   }
 
-  if (deskClockPeriod) {
+  if (deskClockPeriod && deskClockPeriod.textContent !== periodName) {
     deskClockPeriod.textContent = periodName;
   }
 
-  document.body.dataset.lightPeriod = periodName
+  const lightPeriod = periodName
     .toLowerCase()
     .replace(" ", "-");
 
+  if (document.body.dataset.lightPeriod !== lightPeriod) {
+    document.body.dataset.lightPeriod = lightPeriod;
+  }
+
   deskTimeButtons.forEach((button) => {
-    button.setAttribute(
-      "aria-pressed",
-      String(button.dataset.timeMode === selectedTimeMode),
-    );
+    const isPressed = String(button.dataset.timeMode === selectedTimeMode);
+
+    if (button.getAttribute("aria-pressed") !== isPressed) {
+      button.setAttribute("aria-pressed", isPressed);
+    }
   });
 }
 
@@ -421,7 +435,7 @@ deskTimeButtons.forEach((button) => {
       /* The lighting still works for this visit without saved preferences. */
     }
 
-    updateClockAndLighting();
+    startClockUpdates();
     setClockMenuOpen(false);
     deskClock?.focus();
   });
@@ -443,8 +457,28 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-updateClockAndLighting();
-window.setInterval(updateClockAndLighting, 1000);
+let clockUpdateTimer = null;
+
+function stopClockUpdates() {
+  window.clearTimeout(clockUpdateTimer);
+  clockUpdateTimer = null;
+}
+
+function startClockUpdates() {
+  stopClockUpdates();
+  updateClockAndLighting();
+
+  if (selectedTimeMode !== "device" || document.hidden) {
+    return;
+  }
+
+  const millisecondsUntilNextMinute =
+    60000 - (Date.now() % 60000) + 50;
+
+  clockUpdateTimer = window.setTimeout(startClockUpdates, millisecondsUntilNextMinute);
+}
+
+startClockUpdates();
 
 /* Mouse drag, touch swipe, and keyboard exploration for the wide desk. */
 const deskDrag = {
@@ -466,12 +500,15 @@ const deskCanvas = desk?.querySelector(".desk-canvas");
 */
 const DESK_TRAVEL_START = 0.13;
 const DESK_TRAVEL_END = 0.88;
+let deskTrack = null;
+let deskRenderFrame = null;
+let deskResizeFrame = null;
 
 function markDeskExplored() {
   desk?.classList.add("has-been-explored");
 }
 
-function getDeskTrack() {
+function calculateDeskTrack() {
   if (!desk || !deskCanvas) {
     return null;
   }
@@ -515,19 +552,27 @@ function getDeskTrack() {
 }
 
 function renderDeskPosition() {
-  const track = getDeskTrack();
+  const track = deskTrack ?? calculateDeskTrack();
 
   if (!track || !deskCanvas) {
     return;
   }
 
+  deskTrack = track;
   const progress = Math.min(1, Math.max(0, deskDrag.progress));
   const { startX, endX, startY, endY } = track;
   const x = startX + (endX - startX) * progress;
   const y = startY + (endY - startY) * progress;
 
-  deskCanvas.style.setProperty("--desk-x", `${x}px`);
-  deskCanvas.style.setProperty("--desk-y", `${y}px`);
+  const deskX = `${x}px`;
+  const deskY = `${y}px`;
+
+  if (deskCanvas.style.getPropertyValue("--desk-x") !== deskX) {
+    deskCanvas.style.setProperty("--desk-x", deskX);
+  }
+  if (deskCanvas.style.getPropertyValue("--desk-y") !== deskY) {
+    deskCanvas.style.setProperty("--desk-y", deskY);
+  }
 
   /*
     Keep the full-screen grade fixed, but move the window light with the desk.
@@ -535,12 +580,44 @@ function renderDeskPosition() {
   */
   const lightX = (endX - startX) * (progress - 0.5);
   const lightY = (endY - startY) * (progress - 0.5);
-  desk.style.setProperty("--light-x", `${lightX}px`);
-  desk.style.setProperty("--light-y", `${lightY}px`);
+  const lightXValue = `${lightX}px`;
+  const lightYValue = `${lightY}px`;
+
+  if (desk.style.getPropertyValue("--light-x") !== lightXValue) {
+    desk.style.setProperty("--light-x", lightXValue);
+  }
+  if (desk.style.getPropertyValue("--light-y") !== lightYValue) {
+    desk.style.setProperty("--light-y", lightYValue);
+  }
 }
 
-window.requestAnimationFrame(renderDeskPosition);
-window.addEventListener("resize", renderDeskPosition);
+function requestDeskRender() {
+  if (deskRenderFrame !== null) {
+    return;
+  }
+
+  deskRenderFrame = window.requestAnimationFrame(() => {
+    deskRenderFrame = null;
+    renderDeskPosition();
+  });
+}
+
+function refreshDeskTrack() {
+  deskTrack = calculateDeskTrack();
+  requestDeskRender();
+}
+
+refreshDeskTrack();
+window.addEventListener("resize", () => {
+  if (deskResizeFrame !== null) {
+    return;
+  }
+
+  deskResizeFrame = window.requestAnimationFrame(() => {
+    deskResizeFrame = null;
+    refreshDeskTrack();
+  });
+});
 
 function startDeskDrag(event) {
   if (!desk || event.button !== 0 || overlay.classList.contains("is-open")) {
@@ -580,7 +657,7 @@ function moveDeskDrag(event) {
     desk.setPointerCapture(event.pointerId);
   }
 
-  const track = getDeskTrack();
+  const track = deskTrack;
 
   if (!track) {
     return;
@@ -596,7 +673,7 @@ function moveDeskDrag(event) {
     1,
     Math.max(0, deskDrag.startProgress + projectedProgress),
   );
-  renderDeskPosition();
+  requestDeskRender();
   markDeskExplored();
 }
 
@@ -610,7 +687,10 @@ function endDeskDrag(event) {
   }
 
   deskDrag.pointerId = null;
-  desk.classList.remove("is-dragging");
+  requestDeskRender();
+  window.requestAnimationFrame(() => {
+    desk.classList.remove("is-dragging");
+  });
 
   window.setTimeout(() => {
     deskDrag.suppressClick = false;
@@ -638,7 +718,7 @@ desk?.addEventListener("keydown", (event) => {
       deskDrag.progress + (event.key === "ArrowRight" ? 0.12 : -0.12),
     ),
   );
-  renderDeskPosition();
+  requestDeskRender();
   markDeskExplored();
 });
 
@@ -1288,6 +1368,9 @@ document.addEventListener("keydown", (event) => {
 });
 
 /* Periodically wake the phone screen, then let it fade back to sleep. */
+let phoneWakeTimer = null;
+let phoneSleepTimer = null;
+
 function wakePhoneScreen() {
   if (!phone) {
     return;
@@ -1295,18 +1378,41 @@ function wakePhoneScreen() {
 
   phone.classList.add("is-screen-on");
 
-  window.setTimeout(() => {
+  window.clearTimeout(phoneSleepTimer);
+  phoneSleepTimer = window.setTimeout(() => {
     phone.classList.remove("is-screen-on");
   }, 1800);
 }
 
 function schedulePhoneWake() {
+  window.clearTimeout(phoneWakeTimer);
+
+  if (document.hidden) {
+    phoneWakeTimer = null;
+    return;
+  }
+
   const delay = Math.floor(Math.random() * 15000) + 12000;
 
-  window.setTimeout(() => {
+  phoneWakeTimer = window.setTimeout(() => {
     wakePhoneScreen();
     schedulePhoneWake();
   }, delay);
 }
 
 schedulePhoneWake();
+
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    stopClockUpdates();
+    window.clearTimeout(phoneWakeTimer);
+    window.clearTimeout(phoneSleepTimer);
+    phoneWakeTimer = null;
+    phoneSleepTimer = null;
+    phone?.classList.remove("is-screen-on");
+    return;
+  }
+
+  startClockUpdates();
+  schedulePhoneWake();
+});
