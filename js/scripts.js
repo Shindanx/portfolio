@@ -738,14 +738,14 @@ const portfolioSections = {
     <div class="device-overlay notebook-overlay" data-notebook-page="about">
       <img
         class="device-frame notebook-base"
-        src="images/NoteBookOverlayBase.png"
+        src="images/NoteBookOverlayBase.webp"
         alt="Open notebook"
         draggable="false"
       />
 
       <img
         class="notebook-items"
-        src="images/AboutItems.png"
+        src="images/AboutItems.webp"
         alt="About notebook items"
         draggable="false"
       />
@@ -842,7 +842,7 @@ const portfolioSections = {
       </div>
       <picture>
         <source media="(max-width: 700px)" srcset="images/LaptopOverlayMobileCropped.webp" />
-        <img class="device-frame" src="images/LaptopOverlay.png" alt="" draggable="false" />
+        <img class="device-frame" src="images/LaptopOverlay.webp" alt="" draggable="false" />
       </picture>
     </div>
   `,
@@ -859,8 +859,8 @@ const portfolioSections = {
         ></iframe>
       </div>
       <picture>
-        <source media="(max-width: 700px)" srcset="images/CameraOverlayMobile.png" />
-        <img class="device-frame" src="images/CameraOverlay.png" alt="" draggable="false" />
+        <source media="(max-width: 700px)" srcset="images/CameraOverlayMobileCropped.webp" />
+        <img class="device-frame" src="images/CameraOverlay.webp" alt="" draggable="false" />
       </picture>
     </div>
   `,
@@ -912,10 +912,10 @@ const portfolioSections = {
   branding: `
     <div class="device-overlay koikuro-overlay">
       <picture>
-        <source media="(max-width: 700px)" srcset="images/PaperBagOverlayMobile.png" />
+        <source media="(max-width: 700px)" srcset="images/PaperBagOverlayMobile.webp" />
         <img
           class="bag-frame"
-          src="images/PaperBagOverlay.png"
+          src="images/PaperBagOverlay.webp"
           alt="Open KoiKuro paper bag"
           draggable="false"
         />
@@ -1005,15 +1005,15 @@ function setupNotebookTabs() {
 
   const notebookPages = {
     about: {
-      src: "images/AboutItems.png",
+      src: "images/AboutItems.webp",
       alt: "About notebook items",
     },
     journey: {
-      src: "images/JourneyItems.png",
+      src: "images/JourneyItems.webp",
       alt: "Journey notebook items",
     },
     skills: {
-      src: "images/SkillsItems.png",
+      src: "images/SkillsItems.webp",
       alt: "Skills notebook items",
     },
   };

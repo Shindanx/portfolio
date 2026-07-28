@@ -914,20 +914,22 @@ img {
 
   top: auto;
   bottom: 0;
+  width: min(79.75vw, 212.667svh);
+  aspect-ratio: 638 / 360;
 }
 
 .notebook-overlay {
-  --overlay-x: -55%;
-  --overlay-y: -50%;
+  --overlay-x: -58.387%;
+  --overlay-y: -50.212%;
   --overlay-scale-x: 1;
   --overlay-scale-y: 1;
 
   top: 50%;
   bottom: auto;
   width: auto;
-  height: 125svh;
-  height: 125dvh;
-  aspect-ratio: 2 / 1;
+  height: 122.917svh;
+  height: 122.917dvh;
+  aspect-ratio: 620 / 472;
 }
 
 .phone-overlay {
@@ -942,11 +944,13 @@ img {
 }
 
 .camera-overlay {
-  --overlay-x: 13%;
+  --overlay-x: 15.294%;
   --overlay-y: -50%;
 
   left: auto;
   right: 0;
+  width: min(102vw, 272svh);
+  aspect-ratio: 816 / 360;
 }
 
 .koikuro-overlay {
@@ -957,6 +961,8 @@ img {
 
   top: auto;
   bottom: 0;
+  width: min(79.875vw, 213svh);
+  aspect-ratio: 639 / 360;
   pointer-events: none;
 }
 
@@ -971,7 +977,7 @@ img {
 ------------------------------ */
 
 .notebook-tabs {
-  --notebook-tab-width: 6%;
+  --notebook-tab-width: 9.29%;
   --tab-rest-shift: -0.1%;
   --tab-hover-shift: 0%;
   --tab-active-shift: -0.1%;
@@ -1013,18 +1019,18 @@ img {
 }
 
 .notebook-tab-about {
-  left: 78%;
-  top: 25.33%;
+  left: 94%;
+  top: 25.124%;
 }
 
 .notebook-tab-journey {
-  left: 77.9%;
-  top: 31.33%;
+  left: 93.845%;
+  top: 31.225%;
 }
 
 .notebook-tab-skills {
-  left: 77.3%;
-  top: 36.83%;
+  left: 92.916%;
+  top: 36.819%;
 }
 
 .notebook-tab:hover:not([aria-disabled="true"]),
@@ -1068,12 +1074,27 @@ img {
 .notebook-items {
   position: absolute;
   z-index: 3;
-  left: 25%;
-  top: 12%;
-  width: 51.458%;
   height: auto;
   max-width: none;
   pointer-events: none;
+}
+
+.notebook-overlay[data-notebook-page="about"] .notebook-items {
+  left: 17.742%;
+  top: 18.559%;
+  width: 69.032%;
+}
+
+.notebook-overlay[data-notebook-page="journey"] .notebook-items {
+  left: 51.29%;
+  top: 22.161%;
+  width: 39.839%;
+}
+
+.notebook-overlay[data-notebook-page="skills"] .notebook-items {
+  left: 47.258%;
+  top: 20.042%;
+  width: 39.355%;
 }
 
 .device-frame {
@@ -1096,18 +1117,18 @@ img {
   --laptop-home-width: 98.7%;
   --laptop-home-height: 99.5%;
 
-  left: 18.85%;
+  left: 3.135%;
   top: 4.44%;
-  width: 62.2%;
+  width: 93.574%;
   height: 85.83%;
   padding: 0;
   background: #4e79a7;
 }
 
 .camera-screen {
-  left: 18.33%;
+  left: 3.922%;
   top: 7.22%;
-  width: 58.96%;
+  width: 69.363%;
   height: 89.17%;
   background: #000;
 }
@@ -1310,25 +1331,25 @@ img {
 }
 
 .bag-sketchbook {
-  left: 24.896%;
+  left: 12.207%;
   top: 29.722%;
-  width: 16.667%;
+  width: 25.039%;
   height: 48.889%;
   transform: rotate(-2deg);
 }
 
 .bag-menu {
-  left: 39.792%;
+  left: 34.585%;
   top: 32.778%;
-  width: 16.667%;
+  width: 25.039%;
   height: 48.889%;
   transform: rotate(1deg);
 }
 
 .bag-chopsticks {
-  left: 54.583%;
+  left: 56.808%;
   top: 33.611%;
-  width: 16.667%;
+  width: 25.039%;
   height: 48.889%;
   transform: rotate(2deg);
 }
@@ -1370,9 +1391,9 @@ img {
 .koikuro-detail {
   position: absolute;
   z-index: 5;
-  left: 20%;
+  left: 4.851%;
   top: 5%;
-  width: 55%;
+  width: 82.629%;
   height: 90%;
   overflow: auto;
   padding: clamp(18px, 3vw, 42px);
@@ -1858,29 +1879,33 @@ img {
   }
 
   .camera-overlay {
-    width: min(724.638vw, 320svh);
-    /* Push the transparent right side beyond the viewport edge. */
-    --overlay-x: 41.667%;
+    left: 50vw;
+    right: auto;
+    width: min(96vw, 53.667svh);
+    aspect-ratio: 161 / 149;
+    --overlay-x: -50%;
+    --overlay-y: -50%;
   }
 
   .camera-screen {
-    left: 42.292%;
-    top: 28.333%;
-    width: 15.313%;
-    height: 36.667%;
+    left: 3.727%;
+    top: 7.383%;
+    width: 91.304%;
+    height: 88.591%;
   }
 
   .koikuro-overlay {
-    width: min(724.638vw, 320svh);
-    /* The mobile bag export has 34px of transparent canvas below the sprite. */
-    --overlay-y: 9.444%;
+    width: min(96vw, 53.667svh);
+    aspect-ratio: 161 / 288;
+    --overlay-x: -50%;
+    --overlay-y: 0%;
   }
 
   .koikuro-detail {
-    left: 41.3%;
-    top: 8%;
-    width: 17.4%;
-    height: 80%;
+    left: -2.174%;
+    top: -3.194%;
+    width: 103.727%;
+    height: 100%;
     padding: 12px;
     border-width: 4px;
     box-shadow: 5px 6px 0 rgba(20, 11, 7, 0.55);
@@ -1923,42 +1948,51 @@ img {
   }
 
   .bag-item {
-    left: 45.5%;
-    width: 9%;
-    height: 18%;
+    left: 22.981%;
+    width: 53.665%;
+    height: 22.5%;
   }
 
   .bag-sketchbook {
-    top: 20%;
+    top: 11.806%;
     transform: rotate(-2deg);
   }
 
   .bag-menu {
-    top: 41%;
+    top: 38.056%;
     transform: rotate(1deg);
   }
 
   .bag-chopsticks {
-    top: 62%;
+    top: 64.306%;
     transform: rotate(2deg);
   }
 
   .notebook-overlay {
     top: auto;
     bottom: 0;
-    width: 400vw;
+    width: 258.333vw;
     height: auto;
-    --overlay-x: -64%;
-    --overlay-y: -12%;
+    --overlay-x: -52.968%;
+    --overlay-y: -13.263%;
   }
 
-  .notebook-items {
-    left: 26.5%;
+  .notebook-overlay[data-notebook-page="about"] .notebook-items {
+    left: 20.065%;
+    top: 18.559%;
+    width: 69.032%;
+  }
+
+  .notebook-overlay[data-notebook-page="journey"] .notebook-items {
+    left: 53.613%;
+    top: 22.161%;
+    width: 39.839%;
   }
 
   .notebook-overlay[data-notebook-page="skills"] .notebook-items {
-    left: 32.4%;
-    width: 44.5%;
+    left: 53.945%;
+    top: 18.896%;
+    width: 34.029%;
   }
 
   .notebook-tabs {
@@ -1966,18 +2000,18 @@ img {
   }
 
   .notebook-tab-about {
-    left: 71%;
-    top: 75%;
+    left: 83.161%;
+    top: 75.636%;
   }
 
   .notebook-tab-journey {
-    left: 71%;
-    top: 82%;
+    left: 83.161%;
+    top: 82.754%;
   }
 
   .notebook-tab-skills {
-    left: 70%;
-    top: 89%;
+    left: 81.613%;
+    top: 89.873%;
   }
 
   .phone-overlay {
