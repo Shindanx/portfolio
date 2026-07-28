@@ -930,6 +930,7 @@ img {
   height: 122.917svh;
   height: 122.917dvh;
   aspect-ratio: 620 / 472;
+  overflow: visible;
 }
 
 .phone-overlay {
@@ -1971,9 +1972,9 @@ img {
   .notebook-overlay {
     top: auto;
     bottom: 0;
-    width: 258.333vw;
+    width: 200vw;
     height: auto;
-    --overlay-x: -52.968%;
+    --overlay-x: -70%;
     --overlay-y: -13.263%;
   }
 
