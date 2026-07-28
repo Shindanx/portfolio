@@ -1892,19 +1892,19 @@ img {
   .notebook-overlay {
     top: auto;
     bottom: 0;
-    width: 470vw;
+    width: 400vw;
     height: auto;
-    --overlay-x: -67%;
-    --overlay-y: 0%;
+    --overlay-x: -64%;
+    --overlay-y: -12%;
   }
 
   .notebook-items {
-    left: 28%;
+    left: 26.5%;
   }
 
   .notebook-overlay[data-notebook-page="skills"] .notebook-items {
-    left: 30.479%;
-    width: 46.5%;
+    left: 32.4%;
+    width: 44.5%;
   }
 
   .notebook-tabs {
@@ -1912,18 +1912,18 @@ img {
   }
 
   .notebook-tab-about {
-    left: 72.5%;
-    top: 64%;
+    left: 71%;
+    top: 75%;
   }
 
   .notebook-tab-journey {
-    left: 72.4%;
-    top: 72%;
+    left: 71%;
+    top: 82%;
   }
 
   .notebook-tab-skills {
-    left: 71.8%;
-    top: 80%;
+    left: 70%;
+    top: 89%;
   }
 
   .phone-overlay {

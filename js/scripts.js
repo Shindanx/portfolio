@@ -968,7 +968,9 @@ function setupNotebookTabs() {
 }
 
 function closeOverlay() {
-  const brandDetail = overlayContent.querySelector(".koikuro-detail:not([hidden])");
+  const brandDetail = overlayContent.querySelector(
+    ".koikuro-detail:not([hidden])",
+  );
 
   if (brandDetail) {
     overlayContent.querySelector(".koikuro-back")?.click();
@@ -1057,9 +1059,9 @@ function setupKoiKuroBag() {
       <h1>Logo Sketches</h1>
       <div class="koikuro-carousel" aria-label="Logo sketches gallery">
         <div class="koikuro-gallery koikuro-sketches">
-          <figure><button class="gallery-image-button" type="button"><img src="images/First-Sketch.png" alt="Early KoiKuro logo sketches" /></button><figcaption>First exploration</figcaption></figure>
-          <figure><button class="gallery-image-button" type="button"><img src="images/Sketch-Mid.png" alt="Intermediate KoiKuro logo sketches" /></button><figcaption>Developing the idea</figcaption></figure>
-          <figure><button class="gallery-image-button" type="button"><img src="images/Sketch-Final.png" alt="Final KoiKuro logo sketch" /></button><figcaption>Final direction</figcaption></figure>
+          <figure><button class="gallery-image-button" type="button"><img src="images/First-Sketch.webp" alt="Early KoiKuro logo sketches" /></button><figcaption>First exploration</figcaption></figure>
+          <figure><button class="gallery-image-button" type="button"><img src="images/Sketch-Mid.webp" alt="Intermediate KoiKuro logo sketches" /></button><figcaption>Developing the idea</figcaption></figure>
+          <figure><button class="gallery-image-button" type="button"><img src="images/Sketch-Final.webp" alt="Final KoiKuro logo sketch" /></button><figcaption>Final direction</figcaption></figure>
         </div>
         <div class="koikuro-carousel-controls">
           <button class="carousel-previous" type="button" aria-label="Previous image">←</button>
@@ -1080,9 +1082,9 @@ function setupKoiKuroBag() {
       <h1>Brand Mockups</h1>
       <div class="koikuro-carousel" aria-label="Brand mockups gallery">
         <div class="koikuro-gallery koikuro-mockups">
-          <figure><button class="gallery-image-button" type="button"><img src="images/mockup-cup.png" alt="KoiKuro cup mockup" /></button><figcaption>Takeaway cup</figcaption></figure>
-          <figure><button class="gallery-image-button" type="button"><img src="images/mockup-napkin.png" alt="KoiKuro napkin mockup" /></button><figcaption>Napkin</figcaption></figure>
-          <figure><button class="gallery-image-button" type="button"><img src="images/mockup-sign.png" alt="KoiKuro sign mockup" /></button><figcaption>Restaurant sign</figcaption></figure>
+          <figure><button class="gallery-image-button" type="button"><img src="images/mockup-cup.webp" alt="KoiKuro cup mockup" /></button><figcaption>Takeaway cup</figcaption></figure>
+          <figure><button class="gallery-image-button" type="button"><img src="images/mockup-napkin.webp" alt="KoiKuro napkin mockup" /></button><figcaption>Napkin</figcaption></figure>
+          <figure><button class="gallery-image-button" type="button"><img src="images/mockup-sign.webp" alt="KoiKuro sign mockup" /></button><figcaption>Restaurant sign</figcaption></figure>
         </div>
         <div class="koikuro-carousel-controls">
           <button class="carousel-previous" type="button" aria-label="Previous image">←</button>
@@ -1133,19 +1135,22 @@ function setupKoiKuroBag() {
       showSlide(0);
     }
 
-    detailContent.querySelectorAll(".gallery-image-button").forEach((button) => {
-      button.addEventListener("click", () => {
-        const image = button.querySelector("img");
+    detailContent
+      .querySelectorAll(".gallery-image-button")
+      .forEach((button) => {
+        button.addEventListener("click", () => {
+          const image = button.querySelector("img");
 
-        lastExpandedImage = button;
-        lightboxImage.src = image.src;
-        lightboxImage.alt = image.alt;
-        lightboxCaption.textContent =
-          button.closest("figure").querySelector("figcaption")?.textContent || "";
-        lightbox.hidden = false;
-        lightboxClose.focus();
+          lastExpandedImage = button;
+          lightboxImage.src = image.src;
+          lightboxImage.alt = image.alt;
+          lightboxCaption.textContent =
+            button.closest("figure").querySelector("figcaption")?.textContent ||
+            "";
+          lightbox.hidden = false;
+          lightboxClose.focus();
+        });
       });
-    });
   }
 
   itemButtons.forEach((button) => {
