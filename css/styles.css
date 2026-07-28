@@ -1816,11 +1816,17 @@ img {
   }
 
   .laptop-screen {
+    z-index: 3;
     left: 1.242%;
     top: 7.353%;
     width: 97.516%;
     height: 43.75%;
+    overflow: visible;
     padding: 0;
+  }
+
+  .laptop-browser {
+    overflow: hidden;
   }
 
   .project-desktop {
