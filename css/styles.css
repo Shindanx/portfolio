@@ -218,23 +218,75 @@ img {
   mix-blend-mode: screen;
 }
 
-/* 4. Original subtle dust, repositioned over the complete sunlight area. */
+/*
+  4. Dust contained within the sunlight beam. Two repeating particle fields
+  travel at different speeds and fade as they enter and leave the light.
+*/
 .lighting-dust {
-  --dust-x-offset: -20px;
-  --dust-y-offset: -50svh;
+  --dust-x-offset: -5vw;
+  --dust-y-offset: -12svh;
 
   z-index: 10;
-  opacity: 0.5;
-  background:
-    radial-gradient(circle, #fff6ce 0 1px, transparent 1.5px) 7% 21% / 97px 83px,
-    radial-gradient(circle, #ffe6a0 0 1px, transparent 1.5px) 31% 44% / 131px
-      109px,
-    radial-gradient(circle, #fff8df 0 0.7px, transparent 1.2px) 72% 61% / 73px
-      91px;
-  clip-path: polygon(0 0, 42% 0, 78% 80%, 20% 80%);
+  inset: auto;
+  left: 0;
+  top: 0;
+  width: min(82vw, 1180px);
+  height: min(88svh, 900px);
+  overflow: hidden;
+  opacity: 0.62;
+  clip-path: polygon(0 0, 47% 0, 100% 100%, 24% 100%);
   mix-blend-mode: screen;
   filter: hue-rotate(var(--dust-hue));
-  animation: dust-drift 12s ease-in-out infinite alternate;
+  transform: translate3d(
+    calc(var(--light-x) + var(--dust-x-offset)),
+    calc(var(--light-y) + var(--dust-y-offset)),
+    0
+  );
+  contain: paint;
+}
+
+.lighting-dust::before,
+.lighting-dust::after {
+  position: absolute;
+  inset: -24%;
+  content: "";
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(
+    125deg,
+    transparent 7%,
+    #000 24%,
+    #000 72%,
+    transparent 93%
+  );
+  mask-image: linear-gradient(
+    125deg,
+    transparent 7%,
+    #000 24%,
+    #000 72%,
+    transparent 93%
+  );
+}
+
+.lighting-dust::before {
+  opacity: 0.75;
+  background:
+    radial-gradient(circle, #fff8dc 0 1px, transparent 1.45px) 13px 21px /
+      83px 71px,
+    radial-gradient(circle, #ffe8aa 0 0.75px, transparent 1.25px) 47px 58px /
+      119px 103px,
+    radial-gradient(circle, #fff4c8 0 0.6px, transparent 1px) 72px 16px /
+      67px 89px;
+  animation: dust-cross-beam-near 18s linear infinite;
+}
+
+.lighting-dust::after {
+  opacity: 0.42;
+  background:
+    radial-gradient(circle, #fff7d2 0 0.7px, transparent 1.15px) 34px 12px /
+      73px 97px,
+    radial-gradient(circle, #ffe1a0 0 0.55px, transparent 0.95px) 9px 63px /
+      127px 111px;
+  animation: dust-cross-beam-far 27s linear infinite;
 }
 
 @keyframes sunlight-breathe {
@@ -247,23 +299,23 @@ img {
   }
 }
 
-@keyframes dust-drift {
+@keyframes dust-cross-beam-near {
   from {
-    transform: translate3d(
-      calc(var(--light-x) + var(--dust-x-offset)),
-      calc(var(--light-y) + var(--dust-y-offset) + 2px),
-      0
-    );
-    opacity: 0.35;
+    transform: translate3d(-13%, -8%, 0);
   }
 
   to {
-    transform: translate3d(
-      calc(var(--light-x) + var(--dust-x-offset) + 5px),
-      calc(var(--light-y) + var(--dust-y-offset) - 4px),
-      0
-    );
-    opacity: 0.58;
+    transform: translate3d(19%, 16%, 0);
+  }
+}
+
+@keyframes dust-cross-beam-far {
+  from {
+    transform: translate3d(-9%, -4%, 0);
+  }
+
+  to {
+    transform: translate3d(14%, 12%, 0);
   }
 }
 
@@ -1194,7 +1246,8 @@ img {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lighting-dust {
+  .lighting-dust::before,
+  .lighting-dust::after {
     animation: none;
   }
 
