@@ -100,8 +100,12 @@ img {
   transform: translate3d(var(--desk-x), var(--desk-y), 0)
     rotate(var(--desk-angle));
   transform-origin: center;
-  will-change: transform;
   z-index: 1;
+}
+
+.desk.is-dragging .desk-canvas,
+.desk.is-dragging .lighting-moves-with-desk {
+  will-change: transform;
 }
 
 .desk-instructions {
@@ -142,7 +146,10 @@ img {
   pointer-events: none;
 }
 
-/* 1. Full-screen grade: this is the only lighting layer that never moves. */
+/*
+  1. Full-screen grade: translucent colour layers provide the time-of-day
+  treatment without filtering every pixel behind this element.
+*/
 .lighting-dark-filter {
   z-index: 7;
   background:
@@ -158,13 +165,7 @@ img {
       rgba(var(--grade-tint-end), var(--grade-tint-alpha))
     );
   mix-blend-mode: multiply;
-  backdrop-filter: brightness(var(--scene-brightness))
-    saturate(var(--scene-saturation)) sepia(var(--scene-sepia));
-  -webkit-backdrop-filter: brightness(var(--scene-brightness))
-    saturate(var(--scene-saturation)) sepia(var(--scene-sepia));
-  transition:
-    background 900ms ease,
-    backdrop-filter 900ms ease;
+  transition: background 900ms ease;
 }
 
 /* 2. A true full-screen color wash over the desk and every object. */
@@ -177,7 +178,6 @@ img {
 
 .lighting-moves-with-desk {
   transform: translate3d(var(--light-x), var(--light-y), 0);
-  will-change: transform;
 }
 
 /* Aseprite-authored lighting. The export shares the desk's 960 x 360 canvas,
@@ -204,10 +204,12 @@ img {
 
 .desk-lighting-glow {
   z-index: 8;
-  opacity: 0.7;
-  filter: blur(11px) hue-rotate(var(--light-hue))
+  opacity: 0.62;
+  image-rendering: auto;
+  filter: hue-rotate(var(--light-hue))
     brightness(var(--light-glow-brightness)) saturate(1.08);
   mix-blend-mode: screen;
+  transform: translate(2%, -30.2%) rotate(10deg) scale(1.025);
 }
 
 .desk-lighting-contacts {
@@ -216,23 +218,75 @@ img {
   mix-blend-mode: screen;
 }
 
-/* 4. Original subtle dust, repositioned over the complete sunlight area. */
+/*
+  4. Dust contained within the sunlight beam. Two repeating particle fields
+  travel at different speeds and fade as they enter and leave the light.
+*/
 .lighting-dust {
-  --dust-x-offset: -20px;
-  --dust-y-offset: -50svh;
+  --dust-x-offset: 7vw;
+  --dust-y-offset: -81svh;
 
   z-index: 10;
-  opacity: 0.5;
-  background:
-    radial-gradient(circle, #fff6ce 0 1px, transparent 1.5px) 7% 21% / 97px 83px,
-    radial-gradient(circle, #ffe6a0 0 1px, transparent 1.5px) 31% 44% / 131px
-      109px,
-    radial-gradient(circle, #fff8df 0 0.7px, transparent 1.2px) 72% 61% / 73px
-      91px;
-  clip-path: polygon(0 0, 42% 0, 78% 80%, 20% 80%);
+  inset: auto;
+  left: 0;
+  top: 0;
+  width: min(82vw, 1180px);
+  height: min(140svh, 1200px);
+  overflow: hidden;
+  opacity: 0.62;
+  clip-path: polygon(0 0, 47% 0, 100% 77%, 30% 100%);
   mix-blend-mode: screen;
   filter: hue-rotate(var(--dust-hue));
-  animation: dust-drift 12s ease-in-out infinite alternate;
+  transform: translate3d(
+    calc(var(--light-x) + var(--dust-x-offset)),
+    calc(var(--light-y) + var(--dust-y-offset)),
+    0
+  );
+  contain: paint;
+}
+
+.lighting-dust::before,
+.lighting-dust::after {
+  position: absolute;
+  inset: -24%;
+  content: "";
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(
+    to top,
+    transparent 3%,
+    #000 16%,
+    #000 82%,
+    transparent 98%
+  );
+  mask-image: linear-gradient(
+    to top,
+    transparent 3%,
+    #000 16%,
+    #000 82%,
+    transparent 98%
+  );
+}
+
+.lighting-dust::before {
+  opacity: 0.75;
+  background:
+    radial-gradient(circle, #fff8dc 0 1px, transparent 1.45px) 13px 21px /
+      83px 71px,
+    radial-gradient(circle, #ffe8aa 0 0.75px, transparent 1.25px) 47px 58px /
+      119px 103px,
+    radial-gradient(circle, #fff4c8 0 0.6px, transparent 1px) 72px 16px /
+      67px 89px;
+  animation: dust-cross-beam-near 25s linear infinite;
+}
+
+.lighting-dust::after {
+  opacity: 0.42;
+  background:
+    radial-gradient(circle, #fff7d2 0 0.7px, transparent 1.15px) 34px 12px /
+      73px 97px,
+    radial-gradient(circle, #ffe1a0 0 0.55px, transparent 0.95px) 9px 63px /
+      127px 111px;
+  animation: dust-cross-beam-far 38s linear infinite;
 }
 
 @keyframes sunlight-breathe {
@@ -245,23 +299,23 @@ img {
   }
 }
 
-@keyframes dust-drift {
+@keyframes dust-cross-beam-near {
   from {
-    transform: translate3d(
-      calc(var(--light-x) + var(--dust-x-offset)),
-      calc(var(--light-y) + var(--dust-y-offset) + 2px),
-      0
-    );
-    opacity: 0.35;
+    transform: translate3d(-5%, 18%, 0);
   }
 
   to {
-    transform: translate3d(
-      calc(var(--light-x) + var(--dust-x-offset) + 5px),
-      calc(var(--light-y) + var(--dust-y-offset) - 4px),
-      0
-    );
-    opacity: 0.58;
+    transform: translate3d(4%, -16%, 0);
+  }
+}
+
+@keyframes dust-cross-beam-far {
+  from {
+    transform: translate3d(-3%, 14%, 0);
+  }
+
+  to {
+    transform: translate3d(3%, -12%, 0);
   }
 }
 
@@ -860,20 +914,23 @@ img {
 
   top: auto;
   bottom: 0;
+  width: min(79.75vw, 212.667svh);
+  aspect-ratio: 638 / 360;
 }
 
 .notebook-overlay {
-  --overlay-x: -55%;
-  --overlay-y: -50%;
+  --overlay-x: -58.387%;
+  --overlay-y: -50.212%;
   --overlay-scale-x: 1;
   --overlay-scale-y: 1;
 
   top: 50%;
   bottom: auto;
   width: auto;
-  height: 125svh;
-  height: 125dvh;
-  aspect-ratio: 2 / 1;
+  height: 122.917svh;
+  height: 122.917dvh;
+  aspect-ratio: 620 / 472;
+  overflow: visible;
 }
 
 .phone-overlay {
@@ -888,11 +945,13 @@ img {
 }
 
 .camera-overlay {
-  --overlay-x: 13%;
+  --overlay-x: 15.294%;
   --overlay-y: -50%;
 
   left: auto;
   right: 0;
+  width: min(102vw, 272svh);
+  aspect-ratio: 816 / 360;
 }
 
 .koikuro-overlay {
@@ -903,6 +962,8 @@ img {
 
   top: auto;
   bottom: 0;
+  width: min(79.875vw, 213svh);
+  aspect-ratio: 639 / 360;
   pointer-events: none;
 }
 
@@ -917,7 +978,7 @@ img {
 ------------------------------ */
 
 .notebook-tabs {
-  --notebook-tab-width: 6%;
+  --notebook-tab-width: 9.29%;
   --tab-rest-shift: -0.1%;
   --tab-hover-shift: 0%;
   --tab-active-shift: -0.1%;
@@ -959,18 +1020,18 @@ img {
 }
 
 .notebook-tab-about {
-  left: 78%;
-  top: 25.33%;
+  left: 94%;
+  top: 25.124%;
 }
 
 .notebook-tab-journey {
-  left: 77.9%;
-  top: 31.33%;
+  left: 93.845%;
+  top: 31.225%;
 }
 
 .notebook-tab-skills {
-  left: 77.3%;
-  top: 36.83%;
+  left: 92.916%;
+  top: 36.819%;
 }
 
 .notebook-tab:hover:not([aria-disabled="true"]),
@@ -1014,12 +1075,27 @@ img {
 .notebook-items {
   position: absolute;
   z-index: 3;
-  left: 25%;
-  top: 12%;
-  width: 51.458%;
   height: auto;
   max-width: none;
   pointer-events: none;
+}
+
+.notebook-overlay[data-notebook-page="about"] .notebook-items {
+  left: 17.742%;
+  top: 18.559%;
+  width: 69.032%;
+}
+
+.notebook-overlay[data-notebook-page="journey"] .notebook-items {
+  left: 51.29%;
+  top: 22.161%;
+  width: 39.839%;
+}
+
+.notebook-overlay[data-notebook-page="skills"] .notebook-items {
+  left: 47.258%;
+  top: 20.042%;
+  width: 39.355%;
 }
 
 .device-frame {
@@ -1042,18 +1118,18 @@ img {
   --laptop-home-width: 98.7%;
   --laptop-home-height: 99.5%;
 
-  left: 18.85%;
+  left: 3.135%;
   top: 4.44%;
-  width: 62.2%;
+  width: 93.574%;
   height: 85.83%;
   padding: 0;
   background: #4e79a7;
 }
 
 .camera-screen {
-  left: 18.33%;
+  left: 3.922%;
   top: 7.22%;
-  width: 58.96%;
+  width: 69.363%;
   height: 89.17%;
   background: #000;
 }
@@ -1192,7 +1268,8 @@ img {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lighting-dust {
+  .lighting-dust::before,
+  .lighting-dust::after {
     animation: none;
   }
 
@@ -1255,25 +1332,25 @@ img {
 }
 
 .bag-sketchbook {
-  left: 24.896%;
+  left: 12.207%;
   top: 29.722%;
-  width: 16.667%;
+  width: 25.039%;
   height: 48.889%;
   transform: rotate(-2deg);
 }
 
 .bag-menu {
-  left: 39.792%;
+  left: 34.585%;
   top: 32.778%;
-  width: 16.667%;
+  width: 25.039%;
   height: 48.889%;
   transform: rotate(1deg);
 }
 
 .bag-chopsticks {
-  left: 54.583%;
+  left: 56.808%;
   top: 33.611%;
-  width: 16.667%;
+  width: 25.039%;
   height: 48.889%;
   transform: rotate(2deg);
 }
@@ -1315,9 +1392,9 @@ img {
 .koikuro-detail {
   position: absolute;
   z-index: 5;
-  left: 20%;
+  left: 4.851%;
   top: 5%;
-  width: 55%;
+  width: 82.629%;
   height: 90%;
   overflow: auto;
   padding: clamp(18px, 3vw, 42px);
@@ -1731,29 +1808,34 @@ img {
   }
 
   .laptop-overlay {
-    /* The mobile export's visible laptop occupies 16.56% of its 960px-wide
-       canvas. This lets that laptop reach the viewport edges while its full
-       transparent export remains centred and proportionally scaled. */
-    width: min(724.638vw, 320svh);
-    /* The export has 41px of transparent canvas beneath the visible sprite. */
-    --overlay-y: 11.39%;
+    /* Tight 161 x 272 crop of the former 960 x 360 transparent export. */
+    width: min(96vw, 53.667svh);
+    aspect-ratio: 161 / 272;
+    --overlay-x: -50%;
+    --overlay-y: 0.37%;
   }
 
   .laptop-screen {
-    left: 41.875%;
-    top: 18.889%;
-    width: 16.354%;
-    height: 37.222%;
+    z-index: 3;
+    left: 1.242%;
+    top: 7.353%;
+    width: 97.516%;
+    height: 43.75%;
+    overflow: visible;
     padding: 0;
   }
 
+  .laptop-browser {
+    overflow: hidden;
+  }
+
   .project-desktop {
-    gap: clamp(28px, 13vw, 52px);
+    gap: clamp(18px, 8vw, 32px);
     padding-bottom: 22%;
   }
 
   .project-icon {
-    width: 29vw;
+    width: 24vw;
   }
 
   .project-shortcut-sakecat .project-tooltip,
@@ -1761,7 +1843,7 @@ img {
     top: calc(100% + 5px);
     left: 50%;
     right: auto;
-    width: min(46vw, 190px);
+    width: min(42vw, 170px);
     padding: 10px;
     font-size: clamp(12px, 3.6vw, 15px);
     line-height: 1.35;
@@ -1804,29 +1886,33 @@ img {
   }
 
   .camera-overlay {
-    width: min(724.638vw, 320svh);
-    /* Push the transparent right side beyond the viewport edge. */
-    --overlay-x: 41.667%;
+    left: 50vw;
+    right: auto;
+    width: min(96vw, 53.667svh);
+    aspect-ratio: 161 / 149;
+    --overlay-x: -50%;
+    --overlay-y: -50%;
   }
 
   .camera-screen {
-    left: 42.292%;
-    top: 28.333%;
-    width: 15.313%;
-    height: 36.667%;
+    left: 3.727%;
+    top: 7.383%;
+    width: 91.304%;
+    height: 88.591%;
   }
 
   .koikuro-overlay {
-    width: min(724.638vw, 320svh);
-    /* The mobile bag export has 34px of transparent canvas below the sprite. */
-    --overlay-y: 9.444%;
+    width: min(96vw, 53.667svh);
+    aspect-ratio: 161 / 288;
+    --overlay-x: -50%;
+    --overlay-y: 0%;
   }
 
   .koikuro-detail {
-    left: 41.3%;
-    top: 8%;
-    width: 17.4%;
-    height: 80%;
+    left: -2.174%;
+    top: -3.194%;
+    width: 103.727%;
+    height: 100%;
     padding: 12px;
     border-width: 4px;
     box-shadow: 5px 6px 0 rgba(20, 11, 7, 0.55);
@@ -1869,42 +1955,51 @@ img {
   }
 
   .bag-item {
-    left: 45.5%;
-    width: 9%;
-    height: 18%;
+    left: 22.981%;
+    width: 53.665%;
+    height: 22.5%;
   }
 
   .bag-sketchbook {
-    top: 20%;
+    top: 11.806%;
     transform: rotate(-2deg);
   }
 
   .bag-menu {
-    top: 41%;
+    top: 38.056%;
     transform: rotate(1deg);
   }
 
   .bag-chopsticks {
-    top: 62%;
+    top: 64.306%;
     transform: rotate(2deg);
   }
 
   .notebook-overlay {
     top: auto;
     bottom: 0;
-    width: 470vw;
+    width: 200vw;
     height: auto;
-    --overlay-x: -67%;
-    --overlay-y: 0%;
+    --overlay-x: -70%;
+    --overlay-y: -13.263%;
   }
 
-  .notebook-items {
-    left: 28%;
+  .notebook-overlay[data-notebook-page="about"] .notebook-items {
+    left: 20.065%;
+    top: 18.559%;
+    width: 69.032%;
+  }
+
+  .notebook-overlay[data-notebook-page="journey"] .notebook-items {
+    left: 53.613%;
+    top: 22.161%;
+    width: 39.839%;
   }
 
   .notebook-overlay[data-notebook-page="skills"] .notebook-items {
-    left: 30.479%;
-    width: 46.5%;
+    left: 53.945%;
+    top: 18.896%;
+    width: 34.029%;
   }
 
   .notebook-tabs {
@@ -1912,18 +2007,18 @@ img {
   }
 
   .notebook-tab-about {
-    left: 72.5%;
-    top: 64%;
+    left: 83.161%;
+    top: 75.636%;
   }
 
   .notebook-tab-journey {
-    left: 72.4%;
-    top: 72%;
+    left: 83.161%;
+    top: 82.754%;
   }
 
   .notebook-tab-skills {
-    left: 71.8%;
-    top: 80%;
+    left: 81.613%;
+    top: 89.873%;
   }
 
   .phone-overlay {
